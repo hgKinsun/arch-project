@@ -4,3 +4,6 @@
 
 package com.okynk.archproject
 
+import android.app.Application
+
+class App : Application()
