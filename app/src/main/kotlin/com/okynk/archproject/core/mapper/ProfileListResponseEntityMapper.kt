@@ -10,10 +10,10 @@ import com.okynk.archproject.core.entity.PaginatedListEntity
 import com.okynk.archproject.core.entity.ProfileEntity
 import com.okynk.archproject.core.util.parseInt
 
-class ListProfileResponseEntityMapper(val profileMapper: ProfileResponseEntityMapper) :
-    Mapper<ListWrapperResponse<ProfileResponse>, PaginatedListEntity<ProfileEntity>>() {
-    override fun mapFrom(from: ListWrapperResponse<ProfileResponse>): PaginatedListEntity<ProfileEntity> {
-        val listEntity = from.results.map { profileMapper.mapFrom(it) }
+class ProfileListResponseEntityMapper(val profileMapper: Mapper<ProfileResponse, ProfileEntity>) :
+    Mapper<ListWrapperResponse<ProfileResponse>, PaginatedListEntity<ProfileEntity>> {
+    override fun map(from: ListWrapperResponse<ProfileResponse>): PaginatedListEntity<ProfileEntity> {
+        val listEntity = from.results.map { profileMapper.map(it) }
         return PaginatedListEntity(
             listEntity,
             parseInt(from.info.results),

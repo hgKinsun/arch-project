@@ -11,3 +11,4 @@ fun parseInt(str: String?, defaultValue: Int = 0): Int {
 fun getCurrentTimestamp(): Long {
     return System.currentTimeMillis() / 1000
 }
+

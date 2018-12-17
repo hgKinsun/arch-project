@@ -4,15 +4,15 @@
 
 package com.okynk.archproject.core.storage.model
 
+import io.realm.RealmList
 import io.realm.RealmObject
 
-open class LastUpdateDbModel(
-    var key: String = "",
-    var timestamp: Long = 0
+open class PaginatedListDbModel<T>(
+    val data: RealmList<T> = RealmList(),
+    val results: Int = 0,
+    val page: Int = 0
 ) : RealmObject() {
     companion object {
-        const val QUERY_KEY = "key"
-
-        const val PROFILE = "profile"
+        const val QUERY_PAGE = "page"
     }
 }
