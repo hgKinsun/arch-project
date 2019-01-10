@@ -65,27 +65,43 @@ class RealmStorageImpl : RealmStorage {
         }
     }
 
-    override fun <T : RealmObject> insertOrUpdate(data: T, lastUpdateKey: String): Completable {
+    override fun <T : RealmObject> insertOrUpdate(data: T): Completable {
         return Completable.create { emitter ->
             val realm = Realm.getDefaultInstance()
-            val lastUpdate = LastUpdateDbModel(lastUpdateKey, getCurrentTimestamp())
             realm.executeTransaction {
                 it.insertOrUpdate(data)
-                it.insertOrUpdate(lastUpdate)
             }
             realm.close()
             emitter.onComplete()
         }
     }
 
-    override fun <T : RealmObject> insert(data: T, lastUpdateKey: String): Completable {
+    override fun <T : RealmObject> insert(data: T): Completable {
         return Completable.create { emitter ->
             val realm = Realm.getDefaultInstance()
-            val lastUpdate = LastUpdateDbModel(lastUpdateKey, getCurrentTimestamp())
             realm.executeTransaction {
                 it.insert(data)
-                it.insertOrUpdate(lastUpdate)
             }
+            realm.close()
+            emitter.onComplete()
+        }
+    }
+
+    override fun <T : RealmObject> getFirst(clazz: Class<out RealmObject>): Observable<T> {
+        return Observable.create { emitter ->
+            val realm = Realm.getDefaultInstance()
+            val data = realm.where(clazz).findFirst()
+            emitter.onNext(data as T)
+            realm.close()
+            emitter.onComplete()
+        }
+    }
+
+    override fun <T : RealmObject> getAll(clazz: Class<out RealmObject>): Observable<List<T>> {
+        return Observable.create { emitter ->
+            val realm = Realm.getDefaultInstance()
+            val data = realm.where(clazz).findAll()
+            emitter.onNext(realm.copyFromRealm(data) as List<T>)
             realm.close()
             emitter.onComplete()
         }

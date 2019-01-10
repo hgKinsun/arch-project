@@ -14,5 +14,7 @@ class Constants {
 
         const val ONE_HOUR_IN_SECOND: Long = 60 * 60
         const val ONE_DAY_IN_SECOND: Long = 24 * ONE_HOUR_IN_SECOND
+
+        const val FIRST_INDEX = 0
     }
 }

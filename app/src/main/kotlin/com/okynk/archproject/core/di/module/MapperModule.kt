@@ -9,7 +9,6 @@ import com.okynk.archproject.core.api.model.response.ProfileResponse
 import com.okynk.archproject.core.entity.PaginatedListEntity
 import com.okynk.archproject.core.entity.ProfileEntity
 import com.okynk.archproject.core.mapper.*
-import com.okynk.archproject.core.storage.model.PaginatedListDbModel
 import com.okynk.archproject.core.storage.model.ProfileDbModel
 import dagger.Module
 import dagger.Provides
@@ -41,22 +40,8 @@ class MapperModule {
 
     @Provides
     @Singleton
-    @Named(Mapper.PROFILE_LIST_ENTITY_TO_DB)
-    fun provideProfileListEntityDbModelMapper(@Named(Mapper.PROFILE_ENTITY_TO_DB) mapper: Mapper<ProfileEntity, ProfileDbModel>): Mapper<PaginatedListEntity<ProfileEntity>, PaginatedListDbModel<ProfileDbModel>> {
-        return ProfileListEntityDbModelMapper(mapper)
-    }
-
-    @Provides
-    @Singleton
     @Named(Mapper.PROFILE_DB_TO_ENTITY)
     fun provideProfileDbModelEntityMapper(): Mapper<ProfileDbModel, ProfileEntity> {
         return ProfileDbModelEntityMapper()
-    }
-
-    @Provides
-    @Singleton
-    @Named(Mapper.PROFILE_LIST_DB_TO_ENTITY)
-    fun provideProfileListDbModelEntityMapper(@Named(Mapper.PROFILE_DB_TO_ENTITY) mapper: Mapper<ProfileDbModel, ProfileEntity>): Mapper<PaginatedListDbModel<ProfileDbModel>, PaginatedListEntity<ProfileEntity>> {
-        return ProfileListDbModelEntityMapper(mapper)
     }
 }

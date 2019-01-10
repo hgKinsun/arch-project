@@ -7,13 +7,12 @@ package com.okynk.archproject.core.datasource
 import com.okynk.archproject.core.api.model.post.GetProfilesPostModel
 import com.okynk.archproject.core.entity.PaginatedListEntity
 import com.okynk.archproject.core.entity.ProfileEntity
+import com.okynk.archproject.core.util.Optional
 import io.reactivex.Completable
 import io.reactivex.Observable
 
 interface DataSource {
-    fun getProfiles(postModel: GetProfilesPostModel = GetProfilesPostModel()): Observable<PaginatedListEntity<ProfileEntity>>
-    fun saveProfiles(
-        postModel: GetProfilesPostModel = GetProfilesPostModel(),
-        data: PaginatedListEntity<ProfileEntity>
-    ): Completable
+    fun getProfiles(postModel: GetProfilesPostModel = GetProfilesPostModel()): Observable<Optional<PaginatedListEntity<ProfileEntity>>>
+    fun getProfile(): Observable<Optional<ProfileEntity>>
+    fun saveProfile(data: ProfileEntity): Completable
 }

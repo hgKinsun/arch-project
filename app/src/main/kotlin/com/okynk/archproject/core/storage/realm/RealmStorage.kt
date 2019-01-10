@@ -13,7 +13,8 @@ interface RealmStorage {
     fun isLastUpdateExpired(key: String): Observable<Boolean>
     fun invalidateLastUpdate(key: String): Completable
     fun clear(): Completable
-    fun <T : RealmObject> insertOrUpdate(data: T, lastUpdateKey: String): Completable
-    fun <T : RealmObject> insert(data: T, lastUpdateKey: String): Completable
-    fun <T : RealmObject> getFirst(fieldName: String = "", fieldValue: Any, lastUpdateKey: String): Observable<T>
+    fun <T : RealmObject> insertOrUpdate(data: T): Completable
+    fun <T : RealmObject> insert(data: T): Completable
+    fun <T : RealmObject> getFirst(clazz: Class<out RealmObject>): Observable<T>
+    fun <T : RealmObject> getAll(clazz: Class<out RealmObject>): Observable<List<T>>
 }
