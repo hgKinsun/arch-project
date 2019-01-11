@@ -11,8 +11,6 @@ import com.okynk.archproject.core.api.model.response.ProfileResponse
 import com.okynk.archproject.core.entity.PaginatedListEntity
 import com.okynk.archproject.core.entity.ProfileEntity
 import com.okynk.archproject.core.mapper.Mapper
-import com.okynk.archproject.core.util.Optional
-import com.okynk.archproject.core.util.asOptional
 import com.okynk.archproject.util.Constants
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -23,15 +21,15 @@ class RemoteDataSource(
     val mapperItem: Mapper<ProfileResponse, ProfileEntity>
 ) : DataSource {
 
-    override fun getProfiles(postModel: GetProfilesPostModel): Observable<Optional<PaginatedListEntity<ProfileEntity>>> {
+    override fun getProfiles(postModel: GetProfilesPostModel): Observable<PaginatedListEntity<ProfileEntity>> {
         return apiService.getProfiles(postModel.results, postModel.page).map { t ->
-            mapperList.map(t).asOptional()
+            mapperList.map(t)
         }
     }
 
-    override fun getProfile(): Observable<Optional<ProfileEntity>> {
+    override fun getProfile(): Observable<ProfileEntity> {
         return apiService.getProfiles(1, 1).map {
-            mapperItem.map(it.results[Constants.FIRST_INDEX]).asOptional()
+            mapperItem.map(it.results[Constants.FIRST_INDEX])
         }
     }
 

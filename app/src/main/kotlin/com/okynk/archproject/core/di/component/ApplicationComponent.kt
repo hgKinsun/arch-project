@@ -10,7 +10,16 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ApplicationModule::class, ApiModule::class, MapperModule::class, DataSourceModule::class, StorageModule::class])
+@Component(
+    modules = [
+        ApplicationModule::class,
+        ApiModule::class,
+        MapperModule::class,
+        DataSourceModule::class,
+        StorageModule::class,
+        RepositoryModule::class
+    ]
+)
 interface ApplicationComponent {
 
     fun applicationContext(): Context

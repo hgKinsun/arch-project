@@ -11,9 +11,6 @@ import com.okynk.archproject.core.mapper.Mapper
 import com.okynk.archproject.core.storage.model.LastUpdateDbModel
 import com.okynk.archproject.core.storage.model.ProfileDbModel
 import com.okynk.archproject.core.storage.realm.RealmStorage
-import com.okynk.archproject.core.util.None
-import com.okynk.archproject.core.util.Optional
-import com.okynk.archproject.core.util.asOptional
 import com.okynk.archproject.util.Constants
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -24,17 +21,17 @@ class LocalDataSource(
     val profileDbEntityMapper: Mapper<ProfileDbModel, ProfileEntity>
 ) : DataSource {
 
-    override fun getProfiles(postModel: GetProfilesPostModel): Observable<Optional<PaginatedListEntity<ProfileEntity>>> {
+    override fun getProfiles(postModel: GetProfilesPostModel): Observable<PaginatedListEntity<ProfileEntity>> {
         throw Exception(Constants.EXCEPTION_NOT_IMPLEMENTED_LOCAL_DATASOURCE)
     }
 
-    override fun getProfile(): Observable<Optional<ProfileEntity>> {
+    override fun getProfile(): Observable<ProfileEntity> {
         return realmStorage.isLastUpdateExpired(LastUpdateDbModel.PROFILE).flatMap { expired ->
             if (expired) {
-                Observable.just(None)
+                Observable.empty()
             } else {
                 realmStorage.getFirst<ProfileDbModel>(ProfileDbModel::class.java).map {
-                    profileDbEntityMapper.map(it).asOptional()
+                    profileDbEntityMapper.map(it)
                 }
             }
         }
