@@ -17,7 +17,8 @@ import javax.inject.Singleton
         MapperModule::class,
         DataSourceModule::class,
         StorageModule::class,
-        RepositoryModule::class
+        RepositoryModule::class,
+        UseCaseModule::class
     ]
 )
 interface ApplicationComponent {
