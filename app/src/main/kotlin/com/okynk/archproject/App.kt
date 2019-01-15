@@ -30,6 +30,7 @@ class App : Application() {
                 .deleteRealmIfMigrationNeeded()
                 .build()
         )
+
         applicationComponent = DaggerApplicationComponent.builder()
             .applicationModule(ApplicationModule(this))
             .mapperModule(MapperModule())

@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Arch Project</string>
+    <string name="app.name">Arch Project</string>
+
+    <string name="general.label.pleasewait">Please Wait</string>
 </resources>
