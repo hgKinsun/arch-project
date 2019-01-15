@@ -6,6 +6,7 @@ package com.okynk.archproject.core.di.component
 
 import android.content.Context
 import com.okynk.archproject.core.di.module.*
+import com.okynk.archproject.core.usecase.UseCase
 import dagger.Component
 import javax.inject.Singleton
 
@@ -24,4 +25,6 @@ import javax.inject.Singleton
 interface ApplicationComponent {
 
     fun applicationContext(): Context
+
+    fun useCase(): UseCase
 }
