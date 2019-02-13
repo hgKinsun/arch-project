@@ -1,9 +1,9 @@
 package com.okynk.archproject.feature.base
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.okynk.archproject.App
 import com.okynk.archproject.R
