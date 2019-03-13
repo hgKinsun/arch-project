@@ -29,7 +29,9 @@ class RealmStorageImpl : RealmStorage {
     override fun isLastUpdateExpired(key: String): Observable<Boolean> {
         return Observable.create { emitter ->
             val realm = Realm.getDefaultInstance()
-            val lastUpdate = realm.where<LastUpdateDbModel>().equalTo(LastUpdateDbModel.QUERY_KEY, key).findFirst()
+            val lastUpdate =
+                realm.where<LastUpdateDbModel>().equalTo(LastUpdateDbModel.QUERY_KEY, key)
+                    .findFirst()
             lastUpdate?.let {
                 emitter.onNext((getCurrentTimestamp() - it.timestamp > getLastUpdateLifetime(key)))
             } ?: run {
@@ -43,7 +45,9 @@ class RealmStorageImpl : RealmStorage {
     override fun invalidateLastUpdate(key: String): Completable {
         return Completable.create { emitter ->
             val realm = Realm.getDefaultInstance()
-            val lastUpdate = realm.where<LastUpdateDbModel>().equalTo(LastUpdateDbModel.QUERY_KEY, key).findFirst()
+            val lastUpdate =
+                realm.where<LastUpdateDbModel>().equalTo(LastUpdateDbModel.QUERY_KEY, key)
+                    .findFirst()
             lastUpdate?.let {
                 realm.executeTransaction { r ->
                     it.deleteFromRealm()

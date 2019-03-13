@@ -14,7 +14,6 @@ val apiModule = module {
 
     single { createOkHttpClient() }
     single { createRetrofit<ApiService>(get()) }
-
 }
 
 private inline fun <reified T> createRetrofit(okHttpClient: OkHttpClient): T {

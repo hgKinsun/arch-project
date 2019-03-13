@@ -24,7 +24,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
 
@@ -49,6 +49,5 @@ class App : Application() {
                 .deleteRealmIfMigrationNeeded()
                 .build()
         )
-
     }
 }
