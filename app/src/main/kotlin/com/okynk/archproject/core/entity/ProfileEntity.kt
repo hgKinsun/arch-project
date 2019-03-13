@@ -5,10 +5,10 @@
 package com.okynk.archproject.core.entity
 
 data class ProfileEntity(
-    val first: String,
-    val last: String,
-    val email: String,
-    val address: String,
-    val created: String,
-    val balance: String
+    val first: String = "",
+    val last: String = "",
+    val email: String = "",
+    val address: String = "",
+    val created: String = "",
+    val balance: String = ""
 )

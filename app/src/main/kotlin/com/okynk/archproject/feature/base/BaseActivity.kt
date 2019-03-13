@@ -34,6 +34,8 @@ abstract class BaseActivity : AppCompatActivity() {
         mMessageDialog = MaterialDialog(this).message(R.string.general_label_error)
             .cancelable(false)
             .cancelOnTouchOutside(false)
+
+        initComponent()
     }
 
     override fun onResume() {
@@ -47,6 +49,8 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     @LayoutRes abstract fun getLayoutResId(): Int
+
+    abstract fun initComponent()
 
     fun setFragment(container: Int, fragment: Fragment, tag: String, addToBackStack: Boolean) {
         if (!TextUtils.equals(tag, getLastBackStackTag())) {

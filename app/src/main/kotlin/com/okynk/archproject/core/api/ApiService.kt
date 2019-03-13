@@ -16,5 +16,5 @@ interface ApiService {
     }
 
     @GET(PROFILES_URL)
-    fun getProfiles(@Query("results") results: Int, @Query("page") page: Int): Observable<ListWrapperResponse<ProfileResponse>>
+    fun getProfiles(@Query("key") key: String, @Query("results") results: Int, @Query("page") page: Int): Observable<ListWrapperResponse<ProfileResponse>>
 }

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
-
     <!-- accent -->
     <color name="amber">#FFC107</color>
 
     <!-- primary text -->
-    <color name="black2">#212121</color>
+    <color name="black">#212121</color>
 
     <!-- secondary text -->
     <color name="grey">#757575</color>

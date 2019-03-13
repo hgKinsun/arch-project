@@ -4,6 +4,7 @@
 
 package com.okynk.archproject.core.datasource
 
+import com.okynk.archproject.BuildConfig
 import com.okynk.archproject.core.api.ApiService
 import com.okynk.archproject.core.api.model.post.GetProfilesPostModel
 import com.okynk.archproject.core.api.model.response.ListWrapperResponse
@@ -22,13 +23,14 @@ class RemoteDataSource(
 ) : DataSource {
 
     override fun getProfiles(postModel: GetProfilesPostModel): Observable<PaginatedListEntity<ProfileEntity>> {
-        return apiService.getProfiles(postModel.results, postModel.page).map { t ->
+        return apiService.getProfiles(BuildConfig.API_KEY, postModel.results, postModel.page)
+            .map { t ->
             mapperList.map(t)
         }
     }
 
     override fun getProfile(): Observable<ProfileEntity> {
-        return apiService.getProfiles(1, 1).map {
+        return apiService.getProfiles(BuildConfig.API_KEY, 1, 1).map {
             mapperItem.map(it.results[Constants.FIRST_INDEX])
         }
     }
