@@ -9,6 +9,13 @@ import com.okynk.archproject.core.storage.model.ProfileDbModel
 
 class ProfileEntityDbModelMapper : Mapper<ProfileEntity, ProfileDbModel> {
     override fun map(from: ProfileEntity): ProfileDbModel {
-        return ProfileDbModel(from.first, from.last, from.email, from.address, from.created, from.balance)
+        return ProfileDbModel(
+            from.first,
+            from.last,
+            from.email,
+            from.address,
+            from.created,
+            from.balance
+        )
     }
 }

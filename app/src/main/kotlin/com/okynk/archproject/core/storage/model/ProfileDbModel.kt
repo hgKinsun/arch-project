@@ -14,4 +14,3 @@ open class ProfileDbModel(
     var created: String = "",
     var balance: String = ""
 ) : RealmObject()
-

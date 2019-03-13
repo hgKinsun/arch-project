@@ -1,5 +1,8 @@
 <resources>
-    <string name="app.name">Arch Project</string>
+    <string name="app_name">Arch Project</string>
 
     <string name="general.label.pleasewait">Please Wait</string>
+    <string name="general.label.error">Something went wrong</string>
+
+    <string name="main.title">Main Activity</string>
 </resources>

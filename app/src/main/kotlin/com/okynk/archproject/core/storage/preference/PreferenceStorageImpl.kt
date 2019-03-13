@@ -36,5 +36,4 @@ class PreferenceStorageImpl(context: Context) : PreferenceStorage {
     override fun getDummy(): Observable<String> {
         return Observable.just(Hawk.get(PREF_DUMMY))
     }
-
 }

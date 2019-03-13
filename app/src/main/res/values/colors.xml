@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+
+    <!-- accent -->
+    <color name="amber">#FFC107</color>
+
+    <!-- primary text -->
+    <color name="black2">#212121</color>
+
+    <!-- secondary text -->
+    <color name="grey">#757575</color>
+
+    <!-- divider -->
+    <color name="grey2">#BDBDBD</color>
+
+    <!-- primary color -->
+    <color name="teal">#009688</color>
+    <color name="teal2">#00796B</color>
+    <color name="teal3">#B2DFDB</color>
 </resources>
