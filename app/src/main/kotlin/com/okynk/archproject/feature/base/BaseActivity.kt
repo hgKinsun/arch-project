@@ -2,32 +2,51 @@ package com.okynk.archproject.feature.base
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.widget.FrameLayout
+import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.okynk.archproject.R
+import kotlinx.android.synthetic.main.activity_base.toolbar
 
 abstract class BaseActivity : AppCompatActivity() {
-    lateinit var pleaseWaitDialog: MaterialDialog
-    var inBackground = false
+    private lateinit var mPleaseWaitDialog: MaterialDialog
+    private lateinit var mMessageDialog: MaterialDialog
+    private var mInBackground = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        pleaseWaitDialog = MaterialDialog(this).message(R.string.general_label_pleasewait)
+        val containerMaster =
+            layoutInflater.inflate(R.layout.activity_base, null) as CoordinatorLayout
+        val containerContent = containerMaster.findViewById<FrameLayout>(R.id.container_content)
+        layoutInflater.inflate(getLayoutResId(), containerContent, true)
+        super.setContentView(containerMaster)
+        setSupportActionBar(toolbar)
+
+        mPleaseWaitDialog = MaterialDialog(this).message(R.string.general_label_pleasewait)
+            .cancelable(false)
+            .cancelOnTouchOutside(false)
+
+        mMessageDialog = MaterialDialog(this).message(R.string.general_label_error)
             .cancelable(false)
             .cancelOnTouchOutside(false)
     }
 
     override fun onResume() {
         super.onResume()
-        inBackground = false
+        mInBackground = false
     }
 
     override fun onPause() {
-        inBackground = true
+        mInBackground = true
         super.onPause()
     }
+
+    @LayoutRes abstract fun getLayoutResId(): Int
 
     fun setFragment(container: Int, fragment: Fragment, tag: String, addToBackStack: Boolean) {
         if (!TextUtils.equals(tag, getLastBackStackTag())) {
@@ -44,14 +63,34 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun showPleaseWaitDialog() {
-        if (!inBackground) {
-            pleaseWaitDialog.show()
+        if (!mInBackground) {
+            mPleaseWaitDialog.show()
         }
     }
 
     fun dismissPleaseWaitDialog() {
-        if (pleaseWaitDialog.isShowing) {
-            pleaseWaitDialog.dismiss()
+        if (mPleaseWaitDialog.isShowing) {
+            mPleaseWaitDialog.dismiss()
+        }
+    }
+
+    fun showMessageDialog(message: String) {
+        mMessageDialog.setTitle(message)
+        if (!mInBackground) {
+            mMessageDialog.show()
+        }
+    }
+
+    fun showMessageDialog(@StringRes messageResId: Int) {
+        mMessageDialog.setTitle(messageResId)
+        if (!mInBackground) {
+            mMessageDialog.show()
+        }
+    }
+
+    fun dismissMessageDialog() {
+        if (mMessageDialog.isShowing) {
+            mMessageDialog.dismiss()
         }
     }
 
