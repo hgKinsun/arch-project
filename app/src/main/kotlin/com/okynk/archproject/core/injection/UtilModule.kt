@@ -1,4 +1,4 @@
-package com.okynk.archproject.core.di
+package com.okynk.archproject.core.injection
 
 import org.koin.dsl.module.module
 

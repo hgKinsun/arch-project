@@ -1,4 +1,4 @@
-package com.okynk.archproject.core.di
+package com.okynk.archproject.core.injection
 
 import com.okynk.archproject.core.storage.preference.PreferenceStorage
 import com.okynk.archproject.core.storage.preference.PreferenceStorageImpl

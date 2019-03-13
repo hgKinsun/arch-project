@@ -1,4 +1,4 @@
-package com.okynk.archproject.core.di
+package com.okynk.archproject.core.injection
 
 import com.google.gson.Gson
 import com.google.gson.JsonParser

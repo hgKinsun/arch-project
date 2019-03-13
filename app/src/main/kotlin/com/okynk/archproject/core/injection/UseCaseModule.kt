@@ -1,4 +1,4 @@
-package com.okynk.archproject.core.di
+package com.okynk.archproject.core.injection
 
 import com.okynk.archproject.core.usecase.UseCase
 import com.okynk.archproject.core.usecase.UseCaseImpl

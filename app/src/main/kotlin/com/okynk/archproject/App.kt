@@ -5,14 +5,14 @@
 package com.okynk.archproject
 
 import android.app.Application
-import com.okynk.archproject.core.di.apiModule
-import com.okynk.archproject.core.di.dataSourceModule
-import com.okynk.archproject.core.di.mapperModule
-import com.okynk.archproject.core.di.repositoryModule
-import com.okynk.archproject.core.di.storageModule
-import com.okynk.archproject.core.di.useCaseModule
-import com.okynk.archproject.core.di.utilModule
-import com.okynk.archproject.core.di.viewModelModule
+import com.okynk.archproject.core.injection.apiModule
+import com.okynk.archproject.core.injection.dataSourceModule
+import com.okynk.archproject.core.injection.mapperModule
+import com.okynk.archproject.core.injection.repositoryModule
+import com.okynk.archproject.core.injection.storageModule
+import com.okynk.archproject.core.injection.useCaseModule
+import com.okynk.archproject.core.injection.utilModule
+import com.okynk.archproject.core.injection.viewModelModule
 import com.okynk.archproject.util.Constants
 import io.realm.Realm
 import io.realm.RealmConfiguration
