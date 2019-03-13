@@ -5,16 +5,21 @@
 package com.okynk.archproject
 
 import android.app.Application
-import com.okynk.archproject.core.di.component.ApplicationComponent
-import com.okynk.archproject.core.di.component.DaggerApplicationComponent
-import com.okynk.archproject.core.di.module.*
+import com.okynk.archproject.core.di.apiModule
+import com.okynk.archproject.core.di.dataSourceModule
+import com.okynk.archproject.core.di.mapperModule
+import com.okynk.archproject.core.di.repositoryModule
+import com.okynk.archproject.core.di.storageModule
+import com.okynk.archproject.core.di.useCaseModule
+import com.okynk.archproject.core.di.utilModule
+import com.okynk.archproject.core.di.viewModelModule
 import com.okynk.archproject.util.Constants
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 
 class App : Application() {
-    lateinit var applicationComponent: ApplicationComponent
 
     override fun onCreate() {
         super.onCreate()
@@ -23,6 +28,20 @@ class App : Application() {
             Timber.plant(Timber.DebugTree())
         }
 
+        startKoin(
+            this,
+            listOf(
+                apiModule,
+                dataSourceModule,
+                mapperModule,
+                repositoryModule,
+                storageModule,
+                useCaseModule,
+                utilModule,
+                viewModelModule
+            )
+        )
+
         Realm.init(this)
         Realm.setDefaultConfiguration(
             RealmConfiguration.Builder()
@@ -30,16 +49,6 @@ class App : Application() {
                 .deleteRealmIfMigrationNeeded()
                 .build()
         )
-
-        applicationComponent = DaggerApplicationComponent.builder()
-            .applicationModule(ApplicationModule(this))
-            .mapperModule(MapperModule())
-            .storageModule(StorageModule())
-            .apiModule(ApiModule())
-            .dataSourceModule(DataSourceModule())
-            .repositoryModule(RepositoryModule())
-            .useCaseModule(UseCaseModule())
-            .build()
 
     }
 }

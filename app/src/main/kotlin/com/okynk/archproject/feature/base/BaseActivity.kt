@@ -5,23 +5,14 @@ import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
-import com.okynk.archproject.App
 import com.okynk.archproject.R
-import com.okynk.archproject.core.di.component.ActivityComponent
-import com.okynk.archproject.core.di.component.ApplicationComponent
-import com.okynk.archproject.core.di.component.DaggerActivityComponent
 
 abstract class BaseActivity : AppCompatActivity() {
-    lateinit var activityComponent : ActivityComponent
     lateinit var pleaseWaitDialog: MaterialDialog
     var inBackground = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        activityComponent = DaggerActivityComponent.builder()
-            .applicationComponent(getApplicationComponent())
-            .build()
 
         pleaseWaitDialog = MaterialDialog(this).message(R.string.general_label_pleasewait)
             .cancelable(false)
@@ -36,10 +27,6 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onPause() {
         inBackground = true
         super.onPause()
-    }
-
-    fun getApplicationComponent(): ApplicationComponent {
-        return (application as App).applicationComponent
     }
 
     fun setFragment(container: Int, fragment: Fragment, tag: String, addToBackStack: Boolean) {
