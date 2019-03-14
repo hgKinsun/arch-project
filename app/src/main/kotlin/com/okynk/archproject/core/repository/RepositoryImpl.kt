@@ -7,19 +7,22 @@ import com.okynk.archproject.core.entity.ProfileEntity
 import io.reactivex.Observable
 
 class RepositoryImpl(
-    val localDataSource: DataSource,
-    val remoteDataSource: DataSource
+    private val mLocalDataSource: DataSource,
+    private val mRemoteDataSource: DataSource
 ) : Repository {
 
     override fun getProfiles(postModel: GetProfilesPostModel): Observable<PaginatedListEntity<ProfileEntity>> {
-        return remoteDataSource.getProfiles(postModel)
+        return mLocalDataSource.getProfiles(postModel)
+            .switchIfEmpty(mRemoteDataSource.getProfiles(postModel).flatMap {
+                mLocalDataSource.saveProfiles(postModel, it).andThen(Observable.just(it))
+            })
     }
 
     override fun getProfile(): Observable<ProfileEntity> {
-        return localDataSource.getProfile().switchIfEmpty {
-            remoteDataSource.getProfile().doOnNext {
-                localDataSource.saveProfile(it)
+        return mLocalDataSource.getProfile().switchIfEmpty(
+            mRemoteDataSource.getProfile().doOnNext {
+                mLocalDataSource.saveProfile(it)
             }
-        }
+        )
     }
 }

@@ -6,12 +6,12 @@ import com.okynk.archproject.core.entity.ProfileEntity
 import com.okynk.archproject.core.repository.Repository
 import io.reactivex.Observable
 
-class UseCaseImpl(val repository: Repository) : BaseUseCase(), UseCase {
+class UseCaseImpl(private val mRepository: Repository) : BaseUseCase(), UseCase {
     override fun getProfiles(postModel: GetProfilesPostModel): Observable<PaginatedListEntity<ProfileEntity>> {
-        return composeObservable { repository.getProfiles(postModel) }
+        return composeObservable { mRepository.getProfiles(postModel) }
     }
 
     override fun getProfile(): Observable<ProfileEntity> {
-        return composeObservable { repository.getProfile() }
+        return composeObservable { mRepository.getProfile() }
     }
 }

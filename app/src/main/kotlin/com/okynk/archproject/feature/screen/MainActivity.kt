@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.okynk.archproject.R
 import com.okynk.archproject.feature.base.BaseActivity
-import com.okynk.archproject.util.Constants
+import com.okynk.archproject.util.AppConstants
 import com.okynk.archproject.util.LoadMoreStatus
 import kotlinx.android.synthetic.main.activity_main.rv_profiles
 import kotlinx.android.synthetic.main.activity_main.srl
@@ -57,7 +57,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
         mAdapter = ProfileAdapter()
         mAdapter.openLoadAnimation()
         mAdapter.setEnableLoadMore(true)
-        mAdapter.setPreLoadNumber(Constants.PRELOAD_NUMBER)
+        mAdapter.setPreLoadNumber(AppConstants.PRELOAD_NUMBER)
         mAdapter.setOnLoadMoreListener({
             viewModel.onLoadMore()
         }, rv_profiles)

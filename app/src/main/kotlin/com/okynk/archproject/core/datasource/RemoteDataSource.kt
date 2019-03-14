@@ -12,30 +12,37 @@ import com.okynk.archproject.core.api.model.response.ProfileResponse
 import com.okynk.archproject.core.entity.PaginatedListEntity
 import com.okynk.archproject.core.entity.ProfileEntity
 import com.okynk.archproject.core.mapper.Mapper
-import com.okynk.archproject.util.Constants
+import com.okynk.archproject.core.util.CoreConstants
 import io.reactivex.Completable
 import io.reactivex.Observable
 
 class RemoteDataSource(
-    val apiService: ApiService,
-    val mapperList: Mapper<ListWrapperResponse<ProfileResponse>, PaginatedListEntity<ProfileEntity>>,
-    val mapperItem: Mapper<ProfileResponse, ProfileEntity>
+    private val mApiService: ApiService,
+    private val mMapperList: Mapper<ListWrapperResponse<ProfileResponse>, PaginatedListEntity<ProfileEntity>>,
+    private val mMapperItem: Mapper<ProfileResponse, ProfileEntity>
 ) : DataSource {
 
     override fun getProfiles(postModel: GetProfilesPostModel): Observable<PaginatedListEntity<ProfileEntity>> {
-        return apiService.getProfiles(BuildConfig.API_KEY, postModel.results, postModel.page)
+        return mApiService.getProfiles(BuildConfig.API_KEY, postModel.results, postModel.page)
             .map { t ->
-            mapperList.map(t)
+                mMapperList.map(t)
         }
     }
 
+    override fun saveProfiles(
+        postModel: GetProfilesPostModel,
+        data: PaginatedListEntity<ProfileEntity>
+    ): Completable {
+        throw Exception(CoreConstants.EXCEPTION_NOT_IMPLEMENTED_REMOTE_DATASOURCE)
+    }
+
     override fun getProfile(): Observable<ProfileEntity> {
-        return apiService.getProfiles(BuildConfig.API_KEY, 1, 1).map {
-            mapperItem.map(it.results[Constants.FIRST_INDEX])
+        return mApiService.getProfiles(BuildConfig.API_KEY, 1, 1).map {
+            mMapperItem.map(it.results[CoreConstants.FIRST_INDEX])
         }
     }
 
     override fun saveProfile(data: ProfileEntity): Completable {
-        throw Exception(Constants.EXCEPTION_NOT_IMPLEMENTED_REMOTE_DATASOURCE)
+        throw Exception(CoreConstants.EXCEPTION_NOT_IMPLEMENTED_REMOTE_DATASOURCE)
     }
 }

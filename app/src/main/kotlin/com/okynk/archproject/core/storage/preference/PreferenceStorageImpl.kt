@@ -20,17 +20,23 @@ class PreferenceStorageImpl(context: Context) : PreferenceStorage {
     }
 
     override fun clear(): Completable {
-        return Completable.create { emitter ->
+        return Completable.fromCallable {
             Hawk.deleteAll()
-            emitter.onComplete()
         }
+//        return Completable.create { emitter ->
+//            Hawk.deleteAll()
+//            emitter.onComplete()
+//        }
     }
 
     override fun setDummy(str: String): Completable {
-        return Completable.create { emitter ->
+        return Completable.fromCallable {
             Hawk.put(PREF_DUMMY, str)
-            emitter.onComplete()
         }
+//        return Completable.create { emitter ->
+//            Hawk.put(PREF_DUMMY, str)
+//            emitter.onComplete()
+//        }
     }
 
     override fun getDummy(): Observable<String> {

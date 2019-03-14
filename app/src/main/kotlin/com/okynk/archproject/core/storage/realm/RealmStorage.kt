@@ -9,12 +9,19 @@ import io.reactivex.Observable
 import io.realm.RealmObject
 
 interface RealmStorage {
-    fun touchLastUpdate(key: String): Completable
-    fun isLastUpdateExpired(key: String): Observable<Boolean>
-    fun invalidateLastUpdate(key: String): Completable
+    fun touchLastUpdate(key: String, params: String? = null): Completable
+    fun isLastUpdateExpired(key: String, params: String? = null): Observable<Boolean>
+    fun invalidateLastUpdate(key: String, params: String? = null): Completable
     fun clear(): Completable
     fun <T : RealmObject> insertOrUpdate(data: T): Completable
     fun <T : RealmObject> insert(data: T): Completable
-    fun <T : RealmObject> getFirst(clazz: Class<out RealmObject>): Observable<T>
-    fun <T : RealmObject> getAll(clazz: Class<out RealmObject>): Observable<List<T>>
+    fun <T : RealmObject> getFirst(
+        clazz: Class<out RealmObject>,
+        equalConditions: Map<String, String>? = null
+    ): Observable<T>
+
+    fun <T : RealmObject> getAll(
+        clazz: Class<out RealmObject>,
+        equalConditions: Map<String, String>? = null
+    ): Observable<List<T>>
 }

@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2018 Oky Nugroho Kusumo - Open Source Project
+ * Copyright (c) 2019 Oky Nugroho Kusumo - Open Source Project
  */
 
-package com.okynk.archproject.util
+package com.okynk.archproject.core.util
 
-class Constants {
+class CoreConstants {
     companion object {
         const val EXCEPTION_NOT_IMPLEMENTED_REMOTE_DATASOURCE =
             "EXCEPTION_NOT_IMPLEMENTED_REMOTE_DATASOURCE"
@@ -21,7 +21,5 @@ class Constants {
         const val FIRST_INDEX = 0
 
         const val DATABASE_VERSION = 1L
-
-        const val PRELOAD_NUMBER = 3
     }
 }

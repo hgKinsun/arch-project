@@ -12,6 +12,10 @@ import io.reactivex.Observable
 
 interface DataSource {
     fun getProfiles(postModel: GetProfilesPostModel = GetProfilesPostModel()): Observable<PaginatedListEntity<ProfileEntity>>
+    fun saveProfiles(
+        postModel: GetProfilesPostModel,
+        data: PaginatedListEntity<ProfileEntity>
+    ): Completable
     fun getProfile(): Observable<ProfileEntity>
     fun saveProfile(data: ProfileEntity): Completable
 }

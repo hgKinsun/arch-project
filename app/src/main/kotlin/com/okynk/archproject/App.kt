@@ -13,7 +13,7 @@ import com.okynk.archproject.core.injection.storageModule
 import com.okynk.archproject.core.injection.useCaseModule
 import com.okynk.archproject.core.injection.utilModule
 import com.okynk.archproject.core.injection.viewModelModule
-import com.okynk.archproject.util.Constants
+import com.okynk.archproject.core.util.CoreConstants
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import org.koin.android.ext.android.startKoin
@@ -45,7 +45,7 @@ class App : Application() {
         Realm.init(this)
         Realm.setDefaultConfiguration(
             RealmConfiguration.Builder()
-                .schemaVersion(Constants.DATABASE_VERSION)
+                .schemaVersion(CoreConstants.DATABASE_VERSION)
                 .deleteRealmIfMigrationNeeded()
                 .build()
         )

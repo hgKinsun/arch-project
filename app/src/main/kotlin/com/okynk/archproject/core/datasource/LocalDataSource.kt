@@ -4,42 +4,74 @@
 
 package com.okynk.archproject.core.datasource
 
+import com.google.gson.Gson
+import com.okynk.archproject.core.api.ApiService
 import com.okynk.archproject.core.api.model.post.GetProfilesPostModel
 import com.okynk.archproject.core.entity.PaginatedListEntity
 import com.okynk.archproject.core.entity.ProfileEntity
 import com.okynk.archproject.core.mapper.Mapper
+import com.okynk.archproject.core.storage.model.CacheDbModel
 import com.okynk.archproject.core.storage.model.LastUpdateDbModel
 import com.okynk.archproject.core.storage.model.ProfileDbModel
 import com.okynk.archproject.core.storage.realm.RealmStorage
-import com.okynk.archproject.util.Constants
+import com.okynk.archproject.core.util.fromJson
 import io.reactivex.Completable
 import io.reactivex.Observable
 
 class LocalDataSource(
-    val realmStorage: RealmStorage,
-    val profileEntityDbMapper: Mapper<ProfileEntity, ProfileDbModel>,
-    val profileDbEntityMapper: Mapper<ProfileDbModel, ProfileEntity>
+    private val mRealmStorage: RealmStorage,
+    private val mGson: Gson,
+    private val mProfileEntityDbMapper: Mapper<ProfileEntity, ProfileDbModel>,
+    private val mProfileDbEntityMapper: Mapper<ProfileDbModel, ProfileEntity>
 ) : DataSource {
 
     override fun getProfiles(postModel: GetProfilesPostModel): Observable<PaginatedListEntity<ProfileEntity>> {
-        throw Exception(Constants.EXCEPTION_NOT_IMPLEMENTED_LOCAL_DATASOURCE)
+        return mRealmStorage.isLastUpdateExpired(
+            LastUpdateDbModel.PROFILE_LIST,
+            postModel.toString()
+        ).flatMap { expired ->
+            if (expired) {
+                Observable.empty<PaginatedListEntity<ProfileEntity>>()
+            } else {
+                mRealmStorage.getFirst<CacheDbModel>(CacheDbModel::class.java).map {
+                    mGson.fromJson<PaginatedListEntity<ProfileEntity>>(it.data)
+                }
+            }
+        }
+    }
+
+    override fun saveProfiles(
+        postModel: GetProfilesPostModel,
+        data: PaginatedListEntity<ProfileEntity>
+    ): Completable {
+        val cache = CacheDbModel(
+            ApiService.PROFILES_URL,
+            postModel.toString(),
+            mGson.toJson(data)
+        )
+
+        return mRealmStorage.insert(cache).andThen(
+            mRealmStorage.touchLastUpdate(
+                LastUpdateDbModel.PROFILE_LIST,
+                postModel.toString()
+            )
+        )
     }
 
     override fun getProfile(): Observable<ProfileEntity> {
-        return realmStorage.isLastUpdateExpired(LastUpdateDbModel.PROFILE).flatMap { expired ->
+        return mRealmStorage.isLastUpdateExpired(LastUpdateDbModel.PROFILE).flatMap { expired ->
             if (expired) {
-                Observable.empty()
+                Observable.empty<ProfileEntity>()
             } else {
-                realmStorage.getFirst<ProfileDbModel>(ProfileDbModel::class.java).map {
-                    profileDbEntityMapper.map(it)
+                mRealmStorage.getFirst<ProfileDbModel>(ProfileDbModel::class.java).map {
+                    mProfileDbEntityMapper.map(it)
                 }
             }
         }
     }
 
     override fun saveProfile(data: ProfileEntity): Completable {
-        return realmStorage.insert(profileEntityDbMapper.map(data)).andThen {
-            realmStorage.touchLastUpdate(LastUpdateDbModel.PROFILE)
-        }
+        return mRealmStorage.insert(mProfileEntityDbMapper.map(data))
+            .andThen(mRealmStorage.touchLastUpdate(LastUpdateDbModel.PROFILE))
     }
 }

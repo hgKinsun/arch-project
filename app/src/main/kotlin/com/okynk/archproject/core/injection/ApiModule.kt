@@ -1,7 +1,6 @@
 package com.okynk.archproject.core.injection
 
 import com.google.gson.Gson
-import com.google.gson.JsonParser
 import com.okynk.archproject.BuildConfig
 import com.okynk.archproject.core.api.ApiService
 import okhttp3.Interceptor
@@ -19,20 +18,18 @@ private const val CONNECTION_TIMEOUT = 60L
 val apiModule = module {
 
     single { provideOkHttpClient(get()) }
-    single { provideRetrofit<ApiService>(get()) }
-    single { provideGson() }
-    single { provideJsonParser() }
+    single { provideRetrofit<ApiService>(get(), get()) }
     single(
         name = HTTP_LOGGING_INTERCEPTOR,
         definition = { provideHttpLoggingInterceptor() }
     )
 }
 
-private inline fun <reified T> provideRetrofit(okHttpClient: OkHttpClient): T {
+private inline fun <reified T> provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): T {
     val retrofit = Retrofit.Builder()
         .baseUrl("https://randomapi.com/")
         .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
     return retrofit.create(T::class.java)
@@ -45,14 +42,6 @@ private fun provideOkHttpClient(httpLoggingInterceptor: Interceptor): OkHttpClie
         .retryOnConnectionFailure(true)
         .addInterceptor(httpLoggingInterceptor)
         .build()
-}
-
-private fun provideGson(): Gson {
-    return Gson()
-}
-
-private fun provideJsonParser(): JsonParser {
-    return JsonParser()
 }
 
 private fun provideHttpLoggingInterceptor(): Interceptor {

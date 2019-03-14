@@ -12,7 +12,7 @@ import retrofit2.http.Query
 
 interface ApiService {
     companion object {
-        private const val PROFILES_URL = "api/a5bb1rrq"
+        const val PROFILES_URL = "api/a5bb1rrq"
     }
 
     @GET(PROFILES_URL)
