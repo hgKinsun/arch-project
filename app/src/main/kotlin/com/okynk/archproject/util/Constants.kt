@@ -21,5 +21,7 @@ class Constants {
         const val FIRST_INDEX = 0
 
         const val DATABASE_VERSION = 1L
+
+        const val PRELOAD_NUMBER = 3
     }
 }

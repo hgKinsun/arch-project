@@ -6,6 +6,6 @@
 
     <string name="general.button.ok">Ok</string>
 
-    <string name="main.title">Main Activity</string>
+    <string name="main.title">Profiles</string>
     <string name="main.menu.cleardb">Clear DB</string>
 </resources>

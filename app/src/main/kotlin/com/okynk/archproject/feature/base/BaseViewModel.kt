@@ -10,16 +10,17 @@ abstract class BaseViewModel : ViewModel() {
 
     val errorMessageLiveData = SingleLiveEvent<String>()
     val pleaseWaitLiveData = SingleLiveEvent<Boolean>()
-    val disposable = CompositeDisposable()
 
-    fun execute(task: () -> Disposable) {
-        disposable.add(task())
-    }
+    private val mDisposable = CompositeDisposable()
 
     @CallSuper
     override fun onCleared() {
         super.onCleared()
-        disposable.clear()
+        mDisposable.clear()
+    }
+
+    fun execute(task: () -> Disposable) {
+        mDisposable.add(task())
     }
 
     abstract fun start()

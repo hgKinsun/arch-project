@@ -8,17 +8,22 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.afollestad.materialdialogs.MaterialDialog
 import com.okynk.archproject.R
 import kotlinx.android.synthetic.main.activity_base.toolbar
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
+
+    lateinit var viewModel: T
+
     private lateinit var mPleaseWaitDialog: MaterialDialog
     private lateinit var mMessageDialog: MaterialDialog
     private var mInBackground = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        injectViewModel()
 
         val containerMaster =
             layoutInflater.inflate(R.layout.activity_base, null) as CoordinatorLayout
@@ -34,6 +39,7 @@ abstract class BaseActivity : AppCompatActivity() {
         mMessageDialog = MaterialDialog(this).message(R.string.general_label_error)
             .positiveButton(R.string.general_button_ok)
 
+        initObservers()
         initComponent()
     }
 
@@ -47,9 +53,20 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onPause()
     }
 
+    /**
+     * This is the actual content layout
+     */
     @LayoutRes abstract fun getLayoutResId(): Int
 
+    /**
+     * Will be called after onCreate finished
+     */
     abstract fun initComponent()
+
+    /**
+     * Child class must implement this to inject the actual ViewModel
+     */
+    abstract fun injectViewModel()
 
     fun setFragment(container: Int, fragment: Fragment, tag: String, addToBackStack: Boolean) {
         if (!TextUtils.equals(tag, getLastBackStackTag())) {
@@ -109,5 +126,15 @@ abstract class BaseActivity : AppCompatActivity() {
         val manager = supportFragmentManager
         val count = manager.backStackEntryCount
         return if (count > 0) manager.getBackStackEntryAt(count - 1).name!! else ""
+    }
+
+    private fun initObservers() {
+        viewModel.pleaseWaitLiveData.observe(this, Observer {
+            handlePleaseWaitDialog(it)
+        })
+
+        viewModel.errorMessageLiveData.observe(this, Observer {
+            showMessageDialog(it)
+        })
     }
 }

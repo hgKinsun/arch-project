@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.okynk.archproject.R
 import com.okynk.archproject.feature.base.BaseActivity
+import com.okynk.archproject.util.Constants
 import com.okynk.archproject.util.LoadMoreStatus
 import kotlinx.android.synthetic.main.activity_main.rv_profiles
 import kotlinx.android.synthetic.main.activity_main.srl
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity<MainViewModel>() {
 
-    private val mViewModel: MainViewModel by viewModel()
     private lateinit var mAdapter: ProfileAdapter
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -26,11 +26,15 @@ class MainActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         item?.let {
             when (it.itemId) {
-                R.id.menu_cleardb -> mViewModel.onClickClearDb()
+                R.id.menu_cleardb -> viewModel.onClickClearDb()
             }
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun injectViewModel() {
+        viewModel = getViewModel()
     }
 
     override fun getLayoutResId(): Int {
@@ -41,21 +45,21 @@ class MainActivity : BaseActivity() {
         initRecyclerView()
 
         srl.setOnRefreshListener {
-            mViewModel.onSrlRefresh()
+            viewModel.onSrlRefresh()
         }
 
         initObservers()
 
-        mViewModel.start()
+        viewModel.start()
     }
 
     private fun initRecyclerView() {
         mAdapter = ProfileAdapter()
         mAdapter.openLoadAnimation()
         mAdapter.setEnableLoadMore(true)
-        mAdapter.setPreLoadNumber(3)
+        mAdapter.setPreLoadNumber(Constants.PRELOAD_NUMBER)
         mAdapter.setOnLoadMoreListener({
-            mViewModel.onLoadMore()
+            viewModel.onLoadMore()
         }, rv_profiles)
 
         rv_profiles.adapter = mAdapter
@@ -69,27 +73,19 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initObservers() {
-        mViewModel.pleaseWaitLiveData.observe(this, Observer {
-            handlePleaseWaitDialog(it)
-        })
-
-        mViewModel.errorMessageLiveData.observe(this, Observer {
-            showMessageDialog(it)
-        })
-
-        mViewModel.newDataEvent.observe(this, Observer {
+        viewModel.newDataEvent.observe(this, Observer {
             mAdapter.setNewData(it)
         })
 
-        mViewModel.loadMoreDataEvent.observe(this, Observer {
+        viewModel.loadMoreDataEvent.observe(this, Observer {
             mAdapter.addData(it)
         })
 
-        mViewModel.stopRefreshingEvent.observe(this, Observer {
+        viewModel.stopRefreshingEvent.observe(this, Observer {
             srl.isRefreshing = false
         })
 
-        mViewModel.loadMoreStatusEvent.observe(this, Observer {
+        viewModel.loadMoreStatusEvent.observe(this, Observer {
             when (it) {
                 is LoadMoreStatus.Complete -> mAdapter.loadMoreComplete()
                 is LoadMoreStatus.Fail -> mAdapter.loadMoreFail()
