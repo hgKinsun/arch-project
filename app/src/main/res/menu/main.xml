@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2019 Oky Nugroho Kusumo - Open Source Project
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_cleardb"
+        android:title="@string/main.menu.cleardb"
+        app:showAsAction="never"/>
+</menu>

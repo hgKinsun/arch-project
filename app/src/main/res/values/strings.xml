@@ -4,5 +4,8 @@
     <string name="general.label.pleasewait">Please Wait</string>
     <string name="general.label.error">Something went wrong</string>
 
+    <string name="general.button.ok">Ok</string>
+
     <string name="main.title">Main Activity</string>
+    <string name="main.menu.cleardb">Clear DB</string>
 </resources>

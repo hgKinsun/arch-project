@@ -32,8 +32,7 @@ abstract class BaseActivity : AppCompatActivity() {
             .cancelOnTouchOutside(false)
 
         mMessageDialog = MaterialDialog(this).message(R.string.general_label_error)
-            .cancelable(false)
-            .cancelOnTouchOutside(false)
+            .positiveButton(R.string.general_button_ok)
 
         initComponent()
     }
@@ -87,14 +86,14 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun showMessageDialog(message: String) {
-        mMessageDialog.setTitle(message)
+        mMessageDialog.message(text = message)
         if (!mInBackground) {
             mMessageDialog.show()
         }
     }
 
     fun showMessageDialog(@StringRes messageResId: Int) {
-        mMessageDialog.setTitle(messageResId)
+        mMessageDialog.message(messageResId)
         if (!mInBackground) {
             mMessageDialog.show()
         }

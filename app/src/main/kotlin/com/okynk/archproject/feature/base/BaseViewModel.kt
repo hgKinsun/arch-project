@@ -1,15 +1,15 @@
 package com.okynk.archproject.feature.base
 
 import androidx.annotation.CallSuper
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.okynk.archproject.util.SingleLiveEvent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 abstract class BaseViewModel : ViewModel() {
 
-    val errorLiveData = MutableLiveData<String>()
-    val loadingLiveData = MutableLiveData<Boolean>()
+    val errorMessageLiveData = SingleLiveEvent<String>()
+    val pleaseWaitLiveData = SingleLiveEvent<Boolean>()
     val disposable = CompositeDisposable()
 
     fun execute(task: () -> Disposable) {
@@ -21,4 +21,6 @@ abstract class BaseViewModel : ViewModel() {
         super.onCleared()
         disposable.clear()
     }
+
+    abstract fun start()
 }
