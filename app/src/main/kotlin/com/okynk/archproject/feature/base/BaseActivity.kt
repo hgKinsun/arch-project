@@ -78,6 +78,14 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+    fun handlePleaseWaitDialog(show: Boolean) {
+        if (show) {
+            showPleaseWaitDialog()
+        } else {
+            dismissPleaseWaitDialog()
+        }
+    }
+
     fun showMessageDialog(message: String) {
         mMessageDialog.setTitle(message)
         if (!mInBackground) {

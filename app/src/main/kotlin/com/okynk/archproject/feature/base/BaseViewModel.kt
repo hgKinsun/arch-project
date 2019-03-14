@@ -6,9 +6,10 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BaseViewModel<T> : ViewModel() {
-    val viewState: MutableLiveData<T> = MutableLiveData()
+abstract class BaseViewModel : ViewModel() {
 
+    val errorLiveData = MutableLiveData<String>()
+    val loadingLiveData = MutableLiveData<Boolean>()
     val disposable = CompositeDisposable()
 
     fun execute(task: () -> Disposable) {
