@@ -1,5 +1,7 @@
 package com.okynk.archproject.core.injection
 
+import com.okynk.archproject.core.repository.DatabaseRepository
+import com.okynk.archproject.core.repository.DatabaseRepositoryImpl
 import com.okynk.archproject.core.repository.Repository
 import com.okynk.archproject.core.repository.RepositoryImpl
 import com.okynk.archproject.core.util.CoreConstants
@@ -9,4 +11,6 @@ val repositoryModule = module {
     single<Repository> {
         RepositoryImpl(get(CoreConstants.DATASOURCE_LOCAL), get(CoreConstants.DATASOURCE_REMOTE))
     }
+
+    single<DatabaseRepository> { DatabaseRepositoryImpl(get()) }
 }

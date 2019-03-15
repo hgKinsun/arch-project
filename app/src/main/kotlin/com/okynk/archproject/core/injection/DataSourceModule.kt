@@ -1,6 +1,8 @@
 package com.okynk.archproject.core.injection
 
 import com.okynk.archproject.core.datasource.DataSource
+import com.okynk.archproject.core.datasource.DatabaseDataSource
+import com.okynk.archproject.core.datasource.DatabaseDataSourceImpl
 import com.okynk.archproject.core.datasource.LocalDataSource
 import com.okynk.archproject.core.datasource.RemoteDataSource
 import com.okynk.archproject.core.mapper.Mapper
@@ -31,4 +33,6 @@ val dataSourceModule = module {
             )
         }
     )
+
+    single<DatabaseDataSource> { DatabaseDataSourceImpl(get()) }
 }
