@@ -10,21 +10,23 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.okynk.archproject.base.BaseTest
 import com.okynk.archproject.core.repository.sharedpreference.SharedPreferenceRepository
 import com.okynk.archproject.core.usecase.sharedpreference.SharedPreferenceUseCase
+import com.okynk.archproject.core.usecase.sharedpreference.SharedPreferenceUseCaseImpl
 import io.reactivex.Completable
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
-import org.koin.standalone.inject
-import org.koin.test.declareMock
+import org.mockito.Mock
+import org.mockito.MockitoAnnotations
 
 class SharedPreferenceUseCaseTest : BaseTest() {
-    private val mUseCase: SharedPreferenceUseCase by inject()
-    private val mRepository: SharedPreferenceRepository by inject()
+    private lateinit var mUseCase: SharedPreferenceUseCase
+    @Mock private lateinit var mRepository: SharedPreferenceRepository
 
     @Before
     override fun setUp() {
         super.setUp()
-        declareMock<SharedPreferenceRepository>()
+        MockitoAnnotations.initMocks(this)
+        mUseCase = SharedPreferenceUseCaseImpl(mRepository, testScheduler)
     }
 
     @Test

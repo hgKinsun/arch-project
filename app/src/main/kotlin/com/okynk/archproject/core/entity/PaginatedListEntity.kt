@@ -8,8 +8,4 @@ data class PaginatedListEntity<T>(
     val data: List<T> = emptyList(),
     val results: Int = 0,
     val page: Int = 0
-) {
-    override fun toString(): String {
-        return "PaginatedListEntity(data=$data, results=$results, page=$page)"
-    }
-}
+)

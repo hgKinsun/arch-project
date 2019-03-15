@@ -14,20 +14,22 @@ import com.okynk.archproject.core.entity.PaginatedListEntity
 import com.okynk.archproject.core.entity.ProfileEntity
 import com.okynk.archproject.core.repository.general.GeneralRepository
 import com.okynk.archproject.core.usecase.general.GeneralUseCase
+import com.okynk.archproject.core.usecase.general.GeneralUseCaseImpl
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
-import org.koin.standalone.inject
-import org.koin.test.declareMock
+import org.mockito.Mock
+import org.mockito.MockitoAnnotations
 
 class GeneralUseCaseTest : BaseTest() {
-    private val mUseCase: GeneralUseCase by inject()
-    private val mRepository: GeneralRepository by inject()
+    private lateinit var mUseCase: GeneralUseCase
+    @Mock private lateinit var mRepository: GeneralRepository
 
     @Before
     override fun setUp() {
         super.setUp()
-        declareMock<GeneralRepository>()
+        MockitoAnnotations.initMocks(this)
+        mUseCase = GeneralUseCaseImpl(mRepository, testScheduler)
     }
 
     @Test

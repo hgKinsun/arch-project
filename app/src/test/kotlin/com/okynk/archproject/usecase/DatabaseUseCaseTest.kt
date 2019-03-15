@@ -10,20 +10,22 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.okynk.archproject.base.BaseTest
 import com.okynk.archproject.core.repository.database.DatabaseRepository
 import com.okynk.archproject.core.usecase.database.DatabaseUseCase
+import com.okynk.archproject.core.usecase.database.DatabaseUseCaseImpl
 import io.reactivex.Completable
 import org.junit.Before
 import org.junit.Test
-import org.koin.standalone.inject
-import org.koin.test.declareMock
+import org.mockito.Mock
+import org.mockito.MockitoAnnotations
 
 class DatabaseUseCaseTest : BaseTest() {
-    private val mUseCase: DatabaseUseCase by inject()
-    private val mRepository: DatabaseRepository by inject()
+    private lateinit var mUseCase: DatabaseUseCase
+    @Mock private lateinit var mRepository: DatabaseRepository
 
     @Before
     override fun setUp() {
         super.setUp()
-        declareMock<DatabaseRepository>()
+        MockitoAnnotations.initMocks(this)
+        mUseCase = DatabaseUseCaseImpl(mRepository, testScheduler)
     }
 
     @Test
