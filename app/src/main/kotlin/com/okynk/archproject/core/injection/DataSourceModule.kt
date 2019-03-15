@@ -5,6 +5,8 @@ import com.okynk.archproject.core.datasource.database.DatabaseDataSourceImpl
 import com.okynk.archproject.core.datasource.general.GeneralDataSource
 import com.okynk.archproject.core.datasource.general.GeneralLocalDataSource
 import com.okynk.archproject.core.datasource.general.GeneralRemoteDataSource
+import com.okynk.archproject.core.datasource.sharedpreference.SharedPreferenceDataSource
+import com.okynk.archproject.core.datasource.sharedpreference.SharedPreferenceDataSourceImpl
 import com.okynk.archproject.core.mapper.Mapper
 import com.okynk.archproject.core.util.CoreConstants
 import org.koin.dsl.module.module
@@ -35,8 +37,10 @@ val dataSourceModule = module {
     )
 
     single<DatabaseDataSource> {
-        DatabaseDataSourceImpl(
-            get()
-        )
+        DatabaseDataSourceImpl(get())
+    }
+
+    single<SharedPreferenceDataSource> {
+        SharedPreferenceDataSourceImpl(get())
     }
 }
