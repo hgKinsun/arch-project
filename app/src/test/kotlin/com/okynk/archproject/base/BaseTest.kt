@@ -16,12 +16,12 @@ import org.koin.test.KoinTest
 abstract class BaseTest : KoinTest {
 
     @Before
-    fun setUp() {
+    open fun setUp() {
         startKoin(appModules + testModule + testRxModule)
     }
 
     @After
-    fun tearDown() {
+    open fun tearDown() {
         stopKoin()
     }
 }

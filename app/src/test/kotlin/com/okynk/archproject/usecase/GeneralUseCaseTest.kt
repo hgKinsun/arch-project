@@ -15,42 +15,43 @@ import com.okynk.archproject.core.entity.ProfileEntity
 import com.okynk.archproject.core.repository.general.GeneralRepository
 import com.okynk.archproject.core.usecase.general.GeneralUseCase
 import io.reactivex.Observable
+import org.junit.Before
 import org.junit.Test
-import org.koin.standalone.get
 import org.koin.standalone.inject
 import org.koin.test.declareMock
 
 class GeneralUseCaseTest : BaseTest() {
-    private val mGeneralUseCase: GeneralUseCase by inject()
+    private val mUseCase: GeneralUseCase by inject()
+    private val mRepository: GeneralRepository by inject()
+
+    @Before
+    override fun setUp() {
+        super.setUp()
+        declareMock<GeneralRepository>()
+    }
 
     @Test
     fun getProfiles() {
-        declareMock<GeneralRepository>()
         val postModel = mock<GetProfilesPostModel>()
         val expectedResult = mock<PaginatedListEntity<ProfileEntity>>()
-        val generalRepository = get<GeneralRepository>()
 
-        whenever(generalRepository.getProfiles(postModel)).thenReturn(Observable.just(expectedResult))
+        whenever(mRepository.getProfiles(postModel)).thenReturn(Observable.just(expectedResult))
 
-        mGeneralUseCase.getProfiles(postModel).test()
-            .assertSubscribed()
+        mUseCase.getProfiles(postModel).test()
             .assertResult(expectedResult)
 
-        verify(generalRepository, times(1)).getProfiles(postModel)
+        verify(mRepository, times(1)).getProfiles(postModel)
     }
 
     @Test
     fun getProfile() {
-        declareMock<GeneralRepository>()
-        val generalRepository = get<GeneralRepository>()
         val expectedResult = mock<ProfileEntity>()
 
-        whenever(generalRepository.getProfile()).thenReturn(Observable.just(expectedResult))
+        whenever(mRepository.getProfile()).thenReturn(Observable.just(expectedResult))
 
-        mGeneralUseCase.getProfile().test()
-            .assertSubscribed()
+        mUseCase.getProfile().test()
             .assertResult(expectedResult)
 
-        verify(generalRepository, times(1)).getProfile()
+        verify(mRepository, times(1)).getProfile()
     }
 }
