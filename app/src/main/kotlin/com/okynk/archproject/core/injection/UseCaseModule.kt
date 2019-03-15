@@ -1,12 +1,20 @@
 package com.okynk.archproject.core.injection
 
-import com.okynk.archproject.core.usecase.DatabaseUseCase
-import com.okynk.archproject.core.usecase.DatabaseUseCaseImpl
-import com.okynk.archproject.core.usecase.UseCase
-import com.okynk.archproject.core.usecase.UseCaseImpl
+import com.okynk.archproject.core.usecase.database.DatabaseUseCase
+import com.okynk.archproject.core.usecase.database.DatabaseUseCaseImpl
+import com.okynk.archproject.core.usecase.general.GeneralUseCase
+import com.okynk.archproject.core.usecase.general.GeneralUseCaseImpl
 import org.koin.dsl.module.module
 
 val useCaseModule = module {
-    single<UseCase> { UseCaseImpl(get()) }
-    single<DatabaseUseCase> { DatabaseUseCaseImpl(get()) }
+    single<GeneralUseCase> {
+        GeneralUseCaseImpl(
+            get()
+        )
+    }
+    single<DatabaseUseCase> {
+        DatabaseUseCaseImpl(
+            get()
+        )
+    }
 }

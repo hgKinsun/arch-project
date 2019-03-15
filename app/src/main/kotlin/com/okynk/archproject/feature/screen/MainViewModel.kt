@@ -2,14 +2,17 @@ package com.okynk.archproject.feature.screen
 
 import com.okynk.archproject.core.api.model.post.GetProfilesPostModel
 import com.okynk.archproject.core.entity.ProfileEntity
-import com.okynk.archproject.core.usecase.DatabaseUseCase
-import com.okynk.archproject.core.usecase.UseCase
+import com.okynk.archproject.core.usecase.database.DatabaseUseCase
+import com.okynk.archproject.core.usecase.general.GeneralUseCase
 import com.okynk.archproject.feature.base.BaseViewModel
 import com.okynk.archproject.util.LoadMoreStatus
 import com.okynk.archproject.util.SingleLiveEvent
 import timber.log.Timber
 
-class MainViewModel(private val useCase: UseCase, private val databaseUseCase: DatabaseUseCase) :
+class MainViewModel(
+    private val generalUseCase: GeneralUseCase,
+    private val databaseUseCase: DatabaseUseCase
+) :
     BaseViewModel() {
 
     val newDataEvent = SingleLiveEvent<List<ProfileEntity>>()
@@ -25,17 +28,17 @@ class MainViewModel(private val useCase: UseCase, private val databaseUseCase: D
 
     fun getProfiles(fromRefresh: Boolean = false) {
         execute {
-            useCase.getProfiles(GetProfilesPostModel())
+            generalUseCase.getProfiles(GetProfilesPostModel())
                 .doOnSubscribe {
                     if (!fromRefresh) {
-                        pleaseWaitLiveData.postValue(true)
+                        pleaseWaitDialogEvent.postValue(true)
                     }
                 }
                 .doFinally {
                     if (fromRefresh) {
                         stopRefreshingEvent.call()
                     } else {
-                        pleaseWaitLiveData.postValue(false)
+                        pleaseWaitDialogEvent.postValue(false)
                     }
                 }
                 .subscribe({ response ->
@@ -43,7 +46,7 @@ class MainViewModel(private val useCase: UseCase, private val databaseUseCase: D
                     newDataEvent.postValue(response.data)
                 }, { error ->
                     Timber.d(error)
-                    errorMessageLiveData.postValue(error.localizedMessage)
+                    messageDialogEvent.postValue(error.localizedMessage)
                 })
         }
     }
@@ -52,16 +55,16 @@ class MainViewModel(private val useCase: UseCase, private val databaseUseCase: D
         execute {
             databaseUseCase.clear()
                 .doOnSubscribe {
-                    pleaseWaitLiveData.postValue(true)
+                    pleaseWaitDialogEvent.postValue(true)
                 }
                 .doFinally {
-                    pleaseWaitLiveData.postValue(false)
+                    pleaseWaitDialogEvent.postValue(false)
                 }
                 .subscribe({
-                    errorMessageLiveData.postValue("Database Cleared!")
+                    messageDialogEvent.postValue("Database Cleared!")
                 }, { error ->
                     Timber.d(error)
-                    errorMessageLiveData.postValue(error.localizedMessage)
+                    messageDialogEvent.postValue(error.localizedMessage)
                 })
         }
     }
@@ -75,7 +78,7 @@ class MainViewModel(private val useCase: UseCase, private val databaseUseCase: D
         val postModel = GetProfilesPostModel(page = mPage)
 
         execute {
-            useCase.getProfiles(postModel)
+            generalUseCase.getProfiles(postModel)
                 .subscribe({ response ->
                     loadMoreDataEvent.postValue(response.data)
 
@@ -87,7 +90,7 @@ class MainViewModel(private val useCase: UseCase, private val databaseUseCase: D
                     }
                 }, { error ->
                     Timber.d(error)
-                    errorMessageLiveData.postValue(error.localizedMessage)
+                    messageDialogEvent.postValue(error.localizedMessage)
                     loadMoreStatusEvent.postValue(LoadMoreStatus.Fail())
                 })
         }

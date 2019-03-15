@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2018 Oky Nugroho Kusumo - Open Source Project
+ * Copyright (c) 2019 Oky Nugroho Kusumo - Open Source Project
  */
 
-package com.okynk.archproject.core.datasource
+package com.okynk.archproject.core.datasource.general
 
 import com.google.gson.Gson
 import com.okynk.archproject.core.api.ApiService
@@ -18,12 +18,12 @@ import com.okynk.archproject.core.util.fromJson
 import io.reactivex.Completable
 import io.reactivex.Observable
 
-class LocalDataSource(
+class GeneralLocalDataSource(
     private val mRealmStorage: RealmStorage,
     private val mGson: Gson,
     private val mProfileEntityDbMapper: Mapper<ProfileEntity, ProfileDbModel>,
     private val mProfileDbEntityMapper: Mapper<ProfileDbModel, ProfileEntity>
-) : DataSource {
+) : GeneralDataSource {
 
     override fun getProfiles(postModel: GetProfilesPostModel): Observable<PaginatedListEntity<ProfileEntity>> {
         return mRealmStorage.isLastUpdateExpired(

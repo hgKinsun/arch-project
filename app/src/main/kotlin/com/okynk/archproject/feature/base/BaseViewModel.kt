@@ -8,8 +8,8 @@ import io.reactivex.disposables.Disposable
 
 abstract class BaseViewModel : ViewModel() {
 
-    val errorMessageLiveData = SingleLiveEvent<String>()
-    val pleaseWaitLiveData = SingleLiveEvent<Boolean>()
+    val messageDialogEvent = SingleLiveEvent<String>()
+    val pleaseWaitDialogEvent = SingleLiveEvent<Boolean>()
 
     private val mDisposable = CompositeDisposable()
 

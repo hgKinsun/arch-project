@@ -1,4 +1,4 @@
-package com.okynk.archproject.core.usecase
+package com.okynk.archproject.core.usecase.base
 
 import io.reactivex.Completable
 import io.reactivex.Observable

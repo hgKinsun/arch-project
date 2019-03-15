@@ -129,11 +129,11 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
     }
 
     private fun initObservers() {
-        viewModel.pleaseWaitLiveData.observe(this, Observer {
+        viewModel.pleaseWaitDialogEvent.observe(this, Observer {
             handlePleaseWaitDialog(it)
         })
 
-        viewModel.errorMessageLiveData.observe(this, Observer {
+        viewModel.messageDialogEvent.observe(this, Observer {
             showMessageDialog(it)
         })
     }

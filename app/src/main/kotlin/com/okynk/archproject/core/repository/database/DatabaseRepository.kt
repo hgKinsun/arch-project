@@ -2,10 +2,10 @@
  * Copyright (c) 2019 Oky Nugroho Kusumo - Open Source Project
  */
 
-package com.okynk.archproject.core.datasource
+package com.okynk.archproject.core.repository.database
 
 import io.reactivex.Completable
 
-interface DatabaseDataSource {
+interface DatabaseRepository {
     fun clear(): Completable
 }
