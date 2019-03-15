@@ -128,6 +128,7 @@ dependencies {
     androidTestImplementation 'org.koin:koin-test:1.0.2'
     testImplementation "org.mockito:mockito-core:2.25.0"
     androidTestImplementation "org.mockito:mockito-android:2.25.0"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
 
     // Lint
     ktlint "com.github.shyiko:ktlint:0.30.0"

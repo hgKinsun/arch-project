@@ -10,6 +10,7 @@ import com.okynk.archproject.injection.apiModule
 import com.okynk.archproject.injection.dataSourceModule
 import com.okynk.archproject.injection.mapperModule
 import com.okynk.archproject.injection.repositoryModule
+import com.okynk.archproject.injection.rxModule
 import com.okynk.archproject.injection.storageModule
 import com.okynk.archproject.injection.useCaseModule
 import com.okynk.archproject.injection.utilModule
@@ -28,7 +29,8 @@ class App : Application() {
             Timber.plant(Timber.DebugTree())
         }
 
-        startKoin(this, appModules)
+        // separate RxModule because we need to inject different one for UnitTest
+        startKoin(this, appModules + rxModule)
 
         Realm.init(this)
         Realm.setDefaultConfiguration(

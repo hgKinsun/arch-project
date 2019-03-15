@@ -4,6 +4,7 @@
 
 package com.okynk.archproject
 
+import com.okynk.archproject.injection.rxModule
 import com.okynk.archproject.injection.testModule
 import org.junit.Test
 import org.koin.test.KoinTest
@@ -13,6 +14,6 @@ class InjectionTest : KoinTest {
 
     @Test
     fun testInjection() {
-        checkModules(appModules + testModule)
+        checkModules(appModules + testModule + rxModule)
     }
 }

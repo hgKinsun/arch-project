@@ -2,7 +2,7 @@
  * Copyright (c) 2019 Oky Nugroho Kusumo - Open Source Project
  */
 
-package com.okynk.archproject.util
+package com.okynk.archproject.core.rx
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

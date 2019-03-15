@@ -2,7 +2,7 @@ package com.okynk.archproject.feature.base
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
-import com.okynk.archproject.util.SingleLiveEvent
+import com.okynk.archproject.core.rx.SingleLiveEvent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 

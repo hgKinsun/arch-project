@@ -5,8 +5,8 @@
 package com.okynk.archproject.core.usecase.sharedpreference
 
 import com.okynk.archproject.core.repository.sharedpreference.SharedPreferenceRepository
+import com.okynk.archproject.core.rx.SchedulerProvider
 import com.okynk.archproject.core.usecase.base.BaseUseCase
-import com.okynk.archproject.core.util.SchedulerProvider
 import io.reactivex.Completable
 import io.reactivex.Observable
 

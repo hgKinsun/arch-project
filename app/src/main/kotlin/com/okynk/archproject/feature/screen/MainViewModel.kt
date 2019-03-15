@@ -2,11 +2,11 @@ package com.okynk.archproject.feature.screen
 
 import com.okynk.archproject.core.api.model.post.GetProfilesPostModel
 import com.okynk.archproject.core.entity.ProfileEntity
+import com.okynk.archproject.core.rx.SingleLiveEvent
 import com.okynk.archproject.core.usecase.database.DatabaseUseCase
 import com.okynk.archproject.core.usecase.general.GeneralUseCase
 import com.okynk.archproject.feature.base.BaseViewModel
 import com.okynk.archproject.util.LoadMoreStatus
-import com.okynk.archproject.util.SingleLiveEvent
 import timber.log.Timber
 
 class MainViewModel(

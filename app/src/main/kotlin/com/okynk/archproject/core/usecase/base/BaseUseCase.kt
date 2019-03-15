@@ -1,6 +1,6 @@
 package com.okynk.archproject.core.usecase.base
 
-import com.okynk.archproject.core.util.SchedulerProvider
+import com.okynk.archproject.core.rx.SchedulerProvider
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single

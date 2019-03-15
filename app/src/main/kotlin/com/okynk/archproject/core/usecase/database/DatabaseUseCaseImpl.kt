@@ -5,8 +5,8 @@
 package com.okynk.archproject.core.usecase.database
 
 import com.okynk.archproject.core.repository.database.DatabaseRepository
+import com.okynk.archproject.core.rx.SchedulerProvider
 import com.okynk.archproject.core.usecase.base.BaseUseCase
-import com.okynk.archproject.core.util.SchedulerProvider
 import io.reactivex.Completable
 
 class DatabaseUseCaseImpl(

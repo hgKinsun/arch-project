@@ -6,6 +6,7 @@ package com.okynk.archproject.base
 
 import com.okynk.archproject.appModules
 import com.okynk.archproject.injection.testModule
+import com.okynk.archproject.injection.testRxModule
 import org.junit.After
 import org.junit.Before
 import org.koin.standalone.StandAloneContext.startKoin
@@ -16,7 +17,7 @@ abstract class BaseTest : KoinTest {
 
     @Before
     fun setUp() {
-        startKoin(appModules + testModule)
+        startKoin(appModules + testModule + testRxModule)
     }
 
     @After
