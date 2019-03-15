@@ -1,4 +1,4 @@
-package com.okynk.archproject.core.injection
+package com.okynk.archproject.injection
 
 import com.okynk.archproject.core.usecase.database.DatabaseUseCase
 import com.okynk.archproject.core.usecase.database.DatabaseUseCaseImpl
@@ -10,18 +10,14 @@ import org.koin.dsl.module.module
 
 val useCaseModule = module {
     single<GeneralUseCase> {
-        GeneralUseCaseImpl(
-            get()
-        )
+        GeneralUseCaseImpl(get(), get())
     }
 
     single<DatabaseUseCase> {
-        DatabaseUseCaseImpl(
-            get()
-        )
+        DatabaseUseCaseImpl(get(), get())
     }
 
     single<SharedPreferenceUseCase> {
-        SharedPreferenceUseCaseImpl(get())
+        SharedPreferenceUseCaseImpl(get(), get())
     }
 }

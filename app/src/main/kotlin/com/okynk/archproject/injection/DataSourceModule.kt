@@ -1,4 +1,4 @@
-package com.okynk.archproject.core.injection
+package com.okynk.archproject.injection
 
 import com.okynk.archproject.core.datasource.database.DatabaseDataSource
 import com.okynk.archproject.core.datasource.database.DatabaseDataSourceImpl

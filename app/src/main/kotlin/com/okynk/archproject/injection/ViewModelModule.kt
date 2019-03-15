@@ -1,4 +1,4 @@
-package com.okynk.archproject.core.injection
+package com.okynk.archproject.injection
 
 import com.okynk.archproject.feature.screen.MainViewModel
 import org.koin.androidx.viewmodel.ext.koin.viewModel

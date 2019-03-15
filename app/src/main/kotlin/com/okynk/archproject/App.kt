@@ -5,15 +5,15 @@
 package com.okynk.archproject
 
 import android.app.Application
-import com.okynk.archproject.core.injection.apiModule
-import com.okynk.archproject.core.injection.dataSourceModule
-import com.okynk.archproject.core.injection.mapperModule
-import com.okynk.archproject.core.injection.repositoryModule
-import com.okynk.archproject.core.injection.storageModule
-import com.okynk.archproject.core.injection.useCaseModule
-import com.okynk.archproject.core.injection.utilModule
-import com.okynk.archproject.core.injection.viewModelModule
 import com.okynk.archproject.core.util.CoreConstants
+import com.okynk.archproject.injection.apiModule
+import com.okynk.archproject.injection.dataSourceModule
+import com.okynk.archproject.injection.mapperModule
+import com.okynk.archproject.injection.repositoryModule
+import com.okynk.archproject.injection.storageModule
+import com.okynk.archproject.injection.useCaseModule
+import com.okynk.archproject.injection.utilModule
+import com.okynk.archproject.injection.viewModelModule
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import org.koin.android.ext.android.startKoin

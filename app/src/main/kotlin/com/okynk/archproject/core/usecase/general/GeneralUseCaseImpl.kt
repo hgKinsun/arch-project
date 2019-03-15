@@ -9,9 +9,13 @@ import com.okynk.archproject.core.entity.PaginatedListEntity
 import com.okynk.archproject.core.entity.ProfileEntity
 import com.okynk.archproject.core.repository.general.GeneralRepository
 import com.okynk.archproject.core.usecase.base.BaseUseCase
+import com.okynk.archproject.core.util.SchedulerProvider
 import io.reactivex.Observable
 
-class GeneralUseCaseImpl(private val mGeneralRepository: GeneralRepository) : BaseUseCase(),
+class GeneralUseCaseImpl(
+    private val mGeneralRepository: GeneralRepository,
+    scheduler: SchedulerProvider
+) : BaseUseCase(scheduler),
     GeneralUseCase {
     override fun getProfiles(postModel: GetProfilesPostModel): Observable<PaginatedListEntity<ProfileEntity>> {
         return composeObservable { mGeneralRepository.getProfiles(postModel) }

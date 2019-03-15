@@ -1,4 +1,4 @@
-package com.okynk.archproject.core.injection
+package com.okynk.archproject.injection
 
 import com.google.gson.Gson
 import com.okynk.archproject.BuildConfig
