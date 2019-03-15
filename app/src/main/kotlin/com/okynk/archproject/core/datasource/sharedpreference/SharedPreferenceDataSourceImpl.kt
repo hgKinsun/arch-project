@@ -4,17 +4,18 @@
 
 package com.okynk.archproject.core.datasource.sharedpreference
 
+import com.okynk.archproject.core.storage.sharedpreference.SharedPreferenceStorage
 import io.reactivex.Completable
 import io.reactivex.Observable
 
-class SharedPreferenceDataSourceImpl(private val dataSource: SharedPreferenceDataSource) :
+class SharedPreferenceDataSourceImpl(private val storage: SharedPreferenceStorage) :
     SharedPreferenceDataSource {
     override fun setDummy(str: String): Completable {
-        return dataSource.setDummy(str)
+        return storage.setDummy(str)
     }
 
     override fun getDummy(): Observable<String> {
-        return dataSource.getDummy()
+        return storage.getDummy()
     }
 
 }

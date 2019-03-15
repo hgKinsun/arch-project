@@ -124,6 +124,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha02'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha02'
+    testImplementation 'org.koin:koin-test:1.0.2'
+    androidTestImplementation 'org.koin:koin-test:1.0.2'
+    testImplementation "org.mockito:mockito-core:2.25.0"
+    androidTestImplementation "org.mockito:mockito-android:2.25.0"
 
     // Lint
     ktlint "com.github.shyiko:ktlint:0.30.0"

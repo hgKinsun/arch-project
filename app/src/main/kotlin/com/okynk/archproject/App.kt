@@ -28,19 +28,7 @@ class App : Application() {
             Timber.plant(Timber.DebugTree())
         }
 
-        startKoin(
-            this,
-            listOf(
-                apiModule,
-                dataSourceModule,
-                mapperModule,
-                repositoryModule,
-                storageModule,
-                useCaseModule,
-                utilModule,
-                viewModelModule
-            )
-        )
+        startKoin(this, appModules)
 
         Realm.init(this)
         Realm.setDefaultConfiguration(
@@ -51,3 +39,15 @@ class App : Application() {
         )
     }
 }
+
+// Gather app's all modules
+val appModules = listOf(
+    apiModule,
+    dataSourceModule,
+    mapperModule,
+    repositoryModule,
+    storageModule,
+    useCaseModule,
+    utilModule,
+    viewModelModule
+)
