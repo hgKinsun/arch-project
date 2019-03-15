@@ -5,9 +5,9 @@
 package com.okynk.archproject.util
 
 sealed class LoadMoreStatus {
-    class Complete : LoadMoreStatus()
-    class Fail : LoadMoreStatus()
-    class End : LoadMoreStatus()
+    object Complete : LoadMoreStatus()
+    object Fail : LoadMoreStatus()
+    object End : LoadMoreStatus()
 }
 
 

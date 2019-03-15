@@ -84,14 +84,14 @@ class MainViewModel(
 
                     if (mPage == 3) {
                         // example if page 3 is "last page"
-                        loadMoreStatusEvent.postValue(LoadMoreStatus.End())
+                        loadMoreStatusEvent.postValue(LoadMoreStatus.End)
                     } else {
-                        loadMoreStatusEvent.postValue(LoadMoreStatus.Complete())
+                        loadMoreStatusEvent.postValue(LoadMoreStatus.Complete)
                     }
                 }, { error ->
                     Timber.d(error)
                     messageDialogEvent.postValue(error.localizedMessage)
-                    loadMoreStatusEvent.postValue(LoadMoreStatus.Fail())
+                    loadMoreStatusEvent.postValue(LoadMoreStatus.Fail)
                 })
         }
     }

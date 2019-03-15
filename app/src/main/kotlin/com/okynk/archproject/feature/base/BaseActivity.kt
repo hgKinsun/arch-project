@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_base.toolbar
 
 abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
 
-    lateinit var viewModel: T
+    protected lateinit var viewModel: T
 
     private lateinit var mPleaseWaitDialog: MaterialDialog
     private lateinit var mMessageDialog: MaterialDialog
