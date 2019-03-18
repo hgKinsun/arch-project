@@ -5,7 +5,9 @@
 package com.okynk.archproject.base
 
 import com.okynk.archproject.core.rx.SchedulerProvider
+import com.okynk.archproject.injection.mapperModule
 import com.okynk.archproject.injection.testRxModule
+import com.okynk.archproject.injection.utilModule
 import org.junit.After
 import org.junit.Before
 import org.koin.standalone.StandAloneContext.startKoin
@@ -19,7 +21,7 @@ abstract class BaseTest : KoinTest {
 
     @Before
     open fun setUp() {
-        startKoin(listOf(testRxModule))
+        startKoin(listOf(testRxModule) + mapperModule + utilModule)
     }
 
     @After

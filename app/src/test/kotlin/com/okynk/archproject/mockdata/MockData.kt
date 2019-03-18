@@ -4,6 +4,7 @@
 
 package com.okynk.archproject.mockdata
 
+import com.okynk.archproject.core.api.model.post.GetProfilesPostModel
 import com.okynk.archproject.core.api.model.response.InfoResponse
 import com.okynk.archproject.core.api.model.response.ListWrapperResponse
 import com.okynk.archproject.core.api.model.response.ProfileResponse
@@ -101,3 +102,5 @@ val mockPaginatedListProfileEntity = PaginatedListEntity<ProfileEntity>(
     10,
     1
 )
+
+val mockGetProfilesPostModel = GetProfilesPostModel()

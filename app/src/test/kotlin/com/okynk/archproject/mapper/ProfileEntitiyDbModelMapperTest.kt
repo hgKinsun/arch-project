@@ -11,25 +11,20 @@ import com.okynk.archproject.core.entity.PaginatedListEntity
 import com.okynk.archproject.core.entity.ProfileEntity
 import com.okynk.archproject.core.mapper.Mapper
 import com.okynk.archproject.core.mapper.ProfileListResponseEntityMapper
-import com.okynk.archproject.core.mapper.ProfileResponseEntityMapper
 import com.okynk.archproject.mockdata.mockListWrapperProfileResponse
 import com.okynk.archproject.mockdata.mockPaginatedListProfileEntity
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.MockitoAnnotations
+import org.koin.standalone.inject
 
 class ProfileEntitiyDbModelMapperTest : BaseTest() {
     private lateinit var mMapper: Mapper<ListWrapperResponse<ProfileResponse>, PaginatedListEntity<ProfileEntity>>
-    private lateinit var mProfileMapper: Mapper<ProfileResponse, ProfileEntity>
+    private val mProfileMapper: Mapper<ProfileResponse, ProfileEntity> by inject(Mapper.PROFILE_RESPONSE_TO_ENTITY)
 
     @Before
     override fun setUp() {
         super.setUp()
-        MockitoAnnotations.initMocks(this)
-
-        // can't mock this because we need to run the "map logic"
-        mProfileMapper = ProfileResponseEntityMapper()
         mMapper = ProfileListResponseEntityMapper(mProfileMapper)
     }
 
