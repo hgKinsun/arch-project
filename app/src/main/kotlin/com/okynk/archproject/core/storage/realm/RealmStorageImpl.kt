@@ -6,85 +6,55 @@ package com.okynk.archproject.core.storage.realm
 
 import com.okynk.archproject.core.storage.model.LastUpdateDbModel
 import com.okynk.archproject.core.util.CoreConstants
-import com.okynk.archproject.core.util.getCurrentTimestamp
+import com.okynk.archproject.core.util.generalutil.GeneralUtil
+import com.okynk.archproject.core.wrapper.realm.RealmWrapper
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.realm.Realm
 import io.realm.RealmObject
-import io.realm.kotlin.where
 
-class RealmStorageImpl : RealmStorage {
+class RealmStorageImpl(
+    private val mRealmWrapper: RealmWrapper,
+    private val mGeneralUtil: GeneralUtil
+) : RealmStorage {
     override fun touchLastUpdate(key: String, params: String?): Completable {
         return Completable.fromCallable {
-            val realm = Realm.getDefaultInstance()
-            val lastUpdate = LastUpdateDbModel(getLastUpdateKey(key, params), getCurrentTimestamp())
-            realm.executeTransaction { r ->
-                r.insertOrUpdate(lastUpdate)
-            }
-            realm.close()
+            val lastUpdate =
+                LastUpdateDbModel(getLastUpdateKey(key, params), mGeneralUtil.getCurrentTimestamp())
+            mRealmWrapper.insertOrUpdate(lastUpdate)
         }
     }
 
     override fun isLastUpdateExpired(key: String, params: String?): Observable<Boolean> {
         return Observable.fromCallable {
-            val realm = Realm.getDefaultInstance()
+            val conditions = HashMap<String, String>()
+            conditions[LastUpdateDbModel.QUERY_KEY] = getLastUpdateKey(key, params)
             val lastUpdate =
-                realm.where<LastUpdateDbModel>()
-                    .equalTo(LastUpdateDbModel.QUERY_KEY, getLastUpdateKey(key, params))
-                    .findFirst()
+                mRealmWrapper.getFirst<LastUpdateDbModel>(LastUpdateDbModel::class.java, conditions)
             var expired = true
             lastUpdate?.let {
-                expired = (getCurrentTimestamp() - it.timestamp > getLastUpdateLifetime(key))
+                expired =
+                    (mGeneralUtil.getCurrentTimestamp() - it.timestamp > getLastUpdateLifetime(key))
             }
-
-            realm.close()
 
             return@fromCallable expired
         }
     }
 
-    override fun invalidateLastUpdate(key: String, params: String?): Completable {
-        return Completable.fromCallable {
-            val realm = Realm.getDefaultInstance()
-            val lastUpdate =
-                realm.where<LastUpdateDbModel>().contains(LastUpdateDbModel.QUERY_KEY, key)
-                    .findFirst()
-            lastUpdate?.let {
-                realm.executeTransaction { r ->
-                    it.deleteFromRealm()
-                }
-            }
-            realm.close()
-        }
-    }
-
     override fun clear(): Completable {
         return Completable.fromCallable {
-            val realm = Realm.getDefaultInstance()
-            realm.executeTransaction {
-                it.deleteAll()
-            }
-            realm.close()
+            mRealmWrapper.deleteAll()
         }
     }
 
     override fun <T : RealmObject> insertOrUpdate(data: T): Completable {
         return Completable.fromCallable {
-            val realm = Realm.getDefaultInstance()
-            realm.executeTransaction {
-                it.insertOrUpdate(data)
-            }
-            realm.close()
+            mRealmWrapper.insertOrUpdate(data)
         }
     }
 
     override fun <T : RealmObject> insert(data: T): Completable {
         return Completable.fromCallable {
-            val realm = Realm.getDefaultInstance()
-            realm.executeTransaction {
-                it.insert(data)
-            }
-            realm.close()
+            mRealmWrapper.insert(data)
         }
     }
 
@@ -93,22 +63,7 @@ class RealmStorageImpl : RealmStorage {
         equalConditions: Map<String, String>?
     ): Observable<T> {
         return Observable.fromCallable {
-            val realm = Realm.getDefaultInstance()
-            var query = realm.where(clazz)
-
-            equalConditions?.let {
-                for ((k, v) in it) {
-                    query = query.equalTo(k, v)
-                }
-            }
-
-            var result = query.findFirst()
-            result?.let {
-                result = realm.copyFromRealm(it)
-            }
-            realm.close()
-
-            return@fromCallable result as T
+            return@fromCallable mRealmWrapper.getFirst<T>(clazz, equalConditions)
         }
     }
 
@@ -117,27 +72,14 @@ class RealmStorageImpl : RealmStorage {
         equalConditions: Map<String, String>?
     ): Observable<List<T>> {
         return Observable.fromCallable {
-            val realm = Realm.getDefaultInstance()
-            var query = realm.where(clazz)
-
-            equalConditions?.let {
-                for ((k, v) in it) {
-                    query = query.equalTo(k, v)
-                }
-            }
-
-            val result = realm.copyFromRealm(query.findAll())
-
-            realm.close()
-
-            return@fromCallable result as List<T>
+            return@fromCallable mRealmWrapper.getAll<T>(clazz, equalConditions)
         }
     }
 
     private fun getLastUpdateLifetime(key: String): Long {
-        when (key) {
-            LastUpdateDbModel.PROFILE -> return CoreConstants.ONE_DAY_IN_SECOND
-            LastUpdateDbModel.PROFILE_LIST -> return CoreConstants.ONE_DAY_IN_SECOND
+        return when (key) {
+            LastUpdateDbModel.PROFILE -> CoreConstants.ONE_DAY_IN_SECOND
+            LastUpdateDbModel.PROFILE_LIST -> CoreConstants.ONE_DAY_IN_SECOND
             else -> {
                 throw Exception(CoreConstants.EXCEPTION_NOT_DEFINED_LASTUPDATELIFETIME)
             }

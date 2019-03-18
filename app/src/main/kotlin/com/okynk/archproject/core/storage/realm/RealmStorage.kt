@@ -11,7 +11,6 @@ import io.realm.RealmObject
 interface RealmStorage {
     fun touchLastUpdate(key: String, params: String? = null): Completable
     fun isLastUpdateExpired(key: String, params: String? = null): Observable<Boolean>
-    fun invalidateLastUpdate(key: String, params: String? = null): Completable
     fun clear(): Completable
     fun <T : RealmObject> insertOrUpdate(data: T): Completable
     fun <T : RealmObject> insert(data: T): Completable

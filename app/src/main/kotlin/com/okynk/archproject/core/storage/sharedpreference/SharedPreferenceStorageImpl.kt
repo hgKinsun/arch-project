@@ -4,34 +4,33 @@
 
 package com.okynk.archproject.core.storage.sharedpreference
 
-import android.content.Context
-import com.orhanobut.hawk.Hawk
+import com.okynk.archproject.core.wrapper.hawk.HawkWrapper
 import io.reactivex.Completable
 import io.reactivex.Observable
 
-class SharedPreferenceStorageImpl(context: Context) : SharedPreferenceStorage {
+class SharedPreferenceStorageImpl(private val mHawkWrapper: HawkWrapper) : SharedPreferenceStorage {
 
     companion object {
-        private const val PREF_DUMMY = "PREF_DUMMY"
+        const val PREF_DUMMY = "PREF_DUMMY"
     }
 
     init {
-        Hawk.init(context).build()
+        mHawkWrapper.initialize()
     }
 
     override fun clear(): Completable {
         return Completable.fromCallable {
-            Hawk.deleteAll()
+            mHawkWrapper.deleteAll()
         }
     }
 
     override fun setDummy(str: String): Completable {
         return Completable.fromCallable {
-            Hawk.put(PREF_DUMMY, str)
+            mHawkWrapper.put(PREF_DUMMY, str)
         }
     }
 
     override fun getDummy(): Observable<String> {
-        return Observable.just(Hawk.get(PREF_DUMMY))
+        return Observable.just(mHawkWrapper.get(PREF_DUMMY))
     }
 }
