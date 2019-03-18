@@ -61,7 +61,7 @@ class MainViewModel(
                     pleaseWaitDialogEvent.postValue(false)
                 }
                 .subscribe({
-                    messageDialogEvent.postValue("Database Cleared!")
+                    messageDialogEvent.postValue("Database Cleared!\n Please refresh the list")
                 }, { error ->
                     Timber.d(error)
                     messageDialogEvent.postValue(error.localizedMessage)

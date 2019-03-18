@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Oky Nugroho Kusumo - Open Source Project
+ * Copyright (c) 2019 Oky Nugroho Kusumo - Open Source Project
  */
 
 package com.okynk.archproject.core.util.generalutil
