@@ -12,5 +12,4 @@ class DatabaseRepositoryImpl(private val dataSource: DatabaseDataSource) :
     override fun clear(): Completable {
         return dataSource.clear()
     }
-
 }

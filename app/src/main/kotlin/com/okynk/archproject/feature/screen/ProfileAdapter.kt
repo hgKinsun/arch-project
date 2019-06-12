@@ -17,5 +17,4 @@ class ProfileAdapter : BaseQuickAdapter<ProfileEntity, BaseViewHolder>(R.layout.
             }
         }
     }
-
 }
