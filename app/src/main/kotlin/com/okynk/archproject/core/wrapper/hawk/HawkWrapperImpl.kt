@@ -48,5 +48,4 @@ class HawkWrapperImpl(private val mContext: Context) : HawkWrapper {
     override fun delete(key: String?): Boolean {
         return Hawk.delete(key)
     }
-
 }

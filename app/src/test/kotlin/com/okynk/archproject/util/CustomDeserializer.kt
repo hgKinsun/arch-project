@@ -8,7 +8,7 @@ import com.google.gson.JsonElement
 import com.okynk.archproject.util.SerializerTest.UserEntity
 import java.lang.reflect.Type
 
-class CustomDeserializer: JsonDeserializer<UserEntity> {
+class CustomDeserializer : JsonDeserializer<UserEntity> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
@@ -17,15 +17,15 @@ class CustomDeserializer: JsonDeserializer<UserEntity> {
         try {
             val jsonObject = json.asJsonObject
             println(jsonObject.toString())
-            if(jsonObject.has("id_list") && jsonObject.get("id_list").isJsonArray) {
+            if (jsonObject.has("id_list") && jsonObject.get("id_list").isJsonArray) {
                 return Gson().fromJson(json, typeOfT)
             } else {
 
-                jsonObject.add("id_list",  null)
+                jsonObject.add("id_list", null)
                 jsonObject.addProperty("id_list", "asdad")
                 jsonObject.addProperty("id_list", 1)
                 jsonObject.addProperty("id_list", true)
-                jsonObject.add("id_list",  JsonArray())
+                jsonObject.add("id_list", JsonArray())
 
                 println(jsonObject.toString())
 
@@ -35,6 +35,4 @@ class CustomDeserializer: JsonDeserializer<UserEntity> {
             return null
         }
     }
-
-
 }
