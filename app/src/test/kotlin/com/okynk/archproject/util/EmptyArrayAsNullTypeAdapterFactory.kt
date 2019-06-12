@@ -11,7 +11,7 @@ import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
 import com.okynk.archproject.util.SerializerTest.UserEntity
 
-class EmptyArraysAsNullTypeAdapterFactory : TypeAdapterFactory {
+class EmptyArrayAsNullTypeAdapterFactory : TypeAdapterFactory {
 
     companion object {
 
@@ -47,7 +47,6 @@ class EmptyArraysAsNullTypeAdapterFactory : TypeAdapterFactory {
                     } else {
                         throw JsonParseException("Not expecting a non-empty array when deserializing: ${type.rawType.name}")
                     }
-
                 } else {
                     delegate.read(reader)
                 }

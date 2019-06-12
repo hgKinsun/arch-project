@@ -12,10 +12,12 @@ class TestRxError {
         val obs = getErrorProducingObservable()
             .doOnError({ throwable -> println("doOnError") })
 
-        obs.subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe(
-            { s -> },
-            { error -> println("subscribe.onError") }
-        )
+        obs.subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe(
+                { s -> },
+                { error -> println("subscribe.onError") }
+            )
         Thread.sleep(300)
     }
 
@@ -24,12 +26,18 @@ class TestRxError {
     @Throws(InterruptedException::class)
     fun observable_onErrorReturn() {
         val obs = getErrorProducingObservable()
-            .onErrorReturn({ throwable -> "Yeah I got this" })
+            .onErrorReturn { throwable -> "Yeah I got this" }
+            .map {
+                println("Mapping this string : $it")
+                it
+            }
 
-        obs.subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe(
-            { s -> println("got: $s") },
-            { error -> println("subscribe.onError") }
-        )
+        obs.subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe(
+                { s -> println("got: $s") },
+                { error -> println("subscribe.onError") }
+            )
         Thread.sleep(300)
     }
 

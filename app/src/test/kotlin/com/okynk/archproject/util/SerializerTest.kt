@@ -121,14 +121,13 @@ class SerializerTest {
         val userEntityCustomAdapter = typeAdapterFactory.create<UserEntity>(gson, userEntityTypeToken)
         val userEntity1 = userEntityCustomAdapter.fromJson(JSON_RESPONSE_WITH_ID_LIST)
 
-
         val getDelegate = gson.getDelegateAdapter(typeAdapterFactory, userEntityTypeToken)
         val getAdapter = gson.getAdapter(UserEntity::class.java)
 
         assertEquals(userEntity1.userId, 923144)
         assertEquals(userEntity1.fullName, "tks tks")
         assertEquals(userEntity1.followers, 9999)
-        assertEquals(userEntity1.idList, listOf("1","2","3"))
+        assertEquals(userEntity1.idList, listOf("1", "2", "3"))
     }
 
     @Test(expected = JsonSyntaxException::class)
@@ -152,5 +151,4 @@ class SerializerTest {
     fun testEmptyArrayAsNullTypeAdapterFactory() {
         val gson = Gson()
     }
-
 }
