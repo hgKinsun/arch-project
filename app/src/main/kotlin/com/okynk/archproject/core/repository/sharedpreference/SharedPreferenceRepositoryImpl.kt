@@ -17,5 +17,4 @@ class SharedPreferenceRepositoryImpl(private val dataSource: SharedPreferenceDat
     override fun getDummy(): Observable<String> {
         return dataSource.getDummy()
     }
-
 }

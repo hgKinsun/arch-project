@@ -9,5 +9,3 @@ sealed class LoadMoreStatus {
     object Fail : LoadMoreStatus()
     object End : LoadMoreStatus()
 }
-
-

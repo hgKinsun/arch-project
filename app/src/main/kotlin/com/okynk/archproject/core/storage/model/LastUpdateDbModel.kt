@@ -35,5 +35,4 @@ open class LastUpdateDbModel(
         result = 31 * result + timestamp.hashCode()
         return result
     }
-
 }
