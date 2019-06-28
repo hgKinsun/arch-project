@@ -58,6 +58,6 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
     @MainThread
     fun call() {
         postValue(null)
-        //COmment 3
+        //TESTING GIT FORCE PUSH
     }
 }
