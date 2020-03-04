@@ -45,7 +45,7 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
             }
         })
     }
-    // asdasdasd asdasdasdasdasdasd asdasd
+    // Test pull request
     @MainThread
     override fun setValue(t: T?) {
         pending.set(true)
@@ -58,6 +58,6 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
     @MainThread
     fun call() {
         postValue(null)
-        //TESTING GIT FORCE PUSH
+        // TESTING GIT FORCE PUSH
     }
 }
