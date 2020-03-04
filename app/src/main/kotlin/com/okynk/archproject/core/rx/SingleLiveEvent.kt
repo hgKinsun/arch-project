@@ -45,7 +45,7 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
             }
         })
     }
-    //asdasdasd asdasdasdasdasdasd asdasd
+    // asdasdasd asdasdasdasdasdasd asdasd
     @MainThread
     override fun setValue(t: T?) {
         pending.set(true)
